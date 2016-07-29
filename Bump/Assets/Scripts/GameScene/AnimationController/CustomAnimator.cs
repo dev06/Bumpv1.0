@@ -29,12 +29,14 @@ public class CustomAnimator : MonoBehaviour {
 		if (reverse == false)
 		{
 			index += (int)rate;
+			_bumperActive = true; 
 		}
 		else
 		{
 			if (index > 0)
 			{
 				index -= (int)rate;
+				_bumperActive = true; 
 			} else
 			{
 				reverse = false;
