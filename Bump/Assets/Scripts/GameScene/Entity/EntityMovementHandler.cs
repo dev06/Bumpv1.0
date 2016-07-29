@@ -4,11 +4,11 @@ using System;
 public class EntityMovementHandler : MonoBehaviour {
 
 	protected Rigidbody2D rg2d;
-	protected float _boostCoolDown = 1.5f;
-	protected float _boostCounter = 0.0f;
-	protected bool _boosted = false;
 	protected PolygonCollider2D pCol2D;
+	protected bool _boosted = false;
 	protected CustomAnimator _animator;
+	protected float _boostCoolDown         = 1.5f;
+	protected float _boostCounter          = 0.0f;
 
 
 	void Start () {
@@ -41,7 +41,6 @@ public class EntityMovementHandler : MonoBehaviour {
 		{
 			Vector2 force = movement * boost;
 			rg2d.AddForce(force);
-
 			_boosted = true;
 			isBoosting = _boosted;
 		} else {

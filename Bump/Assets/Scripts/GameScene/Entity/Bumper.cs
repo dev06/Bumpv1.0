@@ -18,8 +18,6 @@ public class Bumper : MovementHandler {
         } catch (Exception e) {
             Debug.Log("Components could not be found");
         }
-
-
     }
 
     void Update()
