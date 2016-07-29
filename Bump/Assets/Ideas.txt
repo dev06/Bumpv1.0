@@ -1,0 +1,52 @@
+Bump
+v1.0
+
+Genre
+	Top-down 2D/ Arcade/ Fighting game/Multiplayer
+
+Objective
+	A Level with four players fighting each other
+		-Deplete other player's health by bumping into them 
+		-Last man standing wins
+
+Controls 
+	-Joystick/PS3 Controller 
+	-Keyboard
+	-Control Mapping? 
+
+Environment 
+	-Planets
+		Create fictional planets
+		:Earth
+		:Mars
+		:Jupiter
+		:Venus
+		:etc...
+
+	-Dynamic Environment
+	-Static Environment  
+
+Power ups
+	-Strength
+	-Agility
+	-Point multiplier
+	-etc 
+
+AI
+	-Common enemy?
+
+Modes
+	-Free-For-All
+	-Team Deathmatch
+	-Stock lives
+
+-Player customization
+	-Default presets
+	-Different characters will have different power ups
+
+
+
+Abilities for each player
+	-Strength
+	-Agility
+

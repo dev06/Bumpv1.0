@@ -1,0 +1,14 @@
+[
+	{
+		"name":"Tanker",
+		"strength": 8,
+		"agility": 4
+	},
+
+	{
+		"name":"Swifter",
+		"strength": 4,
+		"agility" : 8
+	}
+
+]
