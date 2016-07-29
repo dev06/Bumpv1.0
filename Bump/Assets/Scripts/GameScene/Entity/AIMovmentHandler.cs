@@ -14,6 +14,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 	private float minForceDistance = .35f; //when to stop adding force
 	private float updatePositionEvery = .5f;
 	private float frameCounter;
+	private float attackFrequency = 1; 
 
 	private float _straightDistanceOffset = 30;
 	private float _angle = 10;
@@ -39,12 +40,15 @@ public class AIMovmentHandler : EntityMovementHandler {
 		{
 			targetMovementHandler = target.GetComponent<MovementHandler>();
 		}
+
+		_animator = GetComponent<CustomAnimator>();
 	}
 
 	// Update is called once per framesd
 	void Update () {
 		UseProjectedTrajectory();
 		UseEvasion();
+		AnimateBotBumper(1);
 
 	}
 
@@ -103,7 +107,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 
 
 	private void UseEvasion() {
-		bool withinRange = Vector2.Distance(target.transform.position, transform.position) < .4f;
+		bool withinRange = Vector2.Distance(target.transform.position, transform.position) < minForceDistance;
 
 		if (withinRange && Random.Range(0, 20) < 4)
 		{
@@ -124,6 +128,19 @@ public class AIMovmentHandler : EntityMovementHandler {
 
 		angle = Mathf.Atan2(dy, dx) * Mathf.Rad2Deg;
 		return angle;
+	}
+
+	private void AnimateBotBumper(float rate)
+	{
+		AdjustColliderOffset(_animator.index);
+		if (WithinRange(transform.position, target.transform.position, minForceDistance) && Random.Range(0, 1) <= attackFrequency)
+		{
+			_animator.AnimateBumper(rate);
+
+		}else
+		{
+			_animator.ResetIndex(); 
+		}
 	}
 
 }

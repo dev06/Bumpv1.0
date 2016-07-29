@@ -30,7 +30,7 @@ public class Bumper : MovementHandler {
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.GetComponent<Rigidbody2D>() != null && movementHandler != null)
+        if (col.gameObject.GetComponent<Rigidbody2D>() != null)
         {
             if (_animator._bumperActive)
             {
@@ -38,7 +38,6 @@ public class Bumper : MovementHandler {
                 float impulse = (Constants.BUMPER_IMPULSE_MAG * GetComponentInParent<Rigidbody2D>().velocity.SqrMagnitude()) + Constants.BASE_BUMPER_IMPLUSE;
                 col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction.normalized * impulse);
                // AddExternalObject(BoostRing, transform.position, transform.rotation);
-
             }
         }
     }

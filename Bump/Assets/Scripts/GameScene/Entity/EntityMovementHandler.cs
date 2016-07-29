@@ -101,5 +101,10 @@ public class EntityMovementHandler : MonoBehaviour {
 			return movement.x != 0 || movement.y != 0;
 	}
 
+	protected bool WithinRange(Vector2 firstPoint, Vector2 secondPoint, float distance)
+	{
+		return Vector2.Distance(firstPoint, secondPoint) < distance; 
+	}
+
 
 }
