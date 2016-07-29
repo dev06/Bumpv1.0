@@ -57,9 +57,7 @@ public class CustomAnimator : MonoBehaviour {
 
 		if (index >= sprites.Length - 1)
 		{
-
 			reverse = true;
-
 		}
 	}
 

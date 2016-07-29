@@ -6,19 +6,19 @@ public class AIMovmentHandler : EntityMovementHandler {
 	// Use this for initialization
 
 	public GameObject Ring;
+	public GameObject target;
 
 	private Vector2 previousPosition;
 	private Vector2 force = Vector2.zero;
-	private GameObject target;
 
-	private float minForceDistance = .35f; //when to stop adding force
-	private float updatePositionEvery = .5f;
-	private float frameCounter;
-	private float attackFrequency = 1; 
 
-	private float _straightDistanceOffset = 30;
-	private float _angle = 10;
+	private float minForceDistance           = .35f; //when to stop adding force
+	private float updatePositionEvery        = .5f;
+	private float attackFrequency            = .8f;  //0.0f (0%) - 1.0f (100%)
+	private float _straightDistanceOffset    = 30f;
+	private float _angle                     = 10f;
 	private float angle;
+	private float frameCounter;
 
 
 	//target instances
@@ -33,7 +33,10 @@ public class AIMovmentHandler : EntityMovementHandler {
 	}
 
 	void InitThis() {
-		target = GameObject.Find("Player");
+		if (target == null)
+		{
+			target = GameObject.Find("Player");
+		}
 		previousPosition = target.transform.position;
 
 		if (target.GetComponent<MovementHandler>() != null)
@@ -49,6 +52,8 @@ public class AIMovmentHandler : EntityMovementHandler {
 		UseProjectedTrajectory();
 		UseEvasion();
 		AnimateBotBumper(1);
+		CanBoost();
+
 
 	}
 
@@ -82,6 +87,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 		float py = currentPosition.y + (dy * Mathf.Pow(distance, 2));
 		Vector2 projectedVector = new Vector2(px, py);
 		previousPosition = currentPosition;
+		Logger.Log(gameObject); 
 		return projectedVector;
 	}
 
@@ -92,6 +98,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 			force = GetProjectedVector();
 			frameCounter = 0;
 		}
+		Boost(force, 60);
 		AddSimpleForce(force);
 	}
 
@@ -137,9 +144,9 @@ public class AIMovmentHandler : EntityMovementHandler {
 		{
 			_animator.AnimateBumper(rate);
 
-		}else
+		} else
 		{
-			_animator.ResetIndex(); 
+			_animator.ResetIndex();
 		}
 	}
 
