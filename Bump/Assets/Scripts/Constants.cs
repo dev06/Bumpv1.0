@@ -6,6 +6,8 @@ public class Constants {
 	public const string HORIZONTAL = "HorizontalKey"; 
 	public const string VERTICAL = "VerticalKey";
 
+	public const KeyCode KEY_ATTACK = KeyCode.F; 
+
     public const string CONTROLLER_LEFT_STICK_VERTICAL = "LeftJoyStickVertical";
     public const string CONTROLLER_LEFT_STICK_HORIZONTAL = "LeftJoyStickHorizontal";
     public const string CONTROLLER_X_BUTTON = "XButton"; 

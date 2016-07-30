@@ -200,7 +200,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &69364804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,8 +212,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6791f16bc5e57c145ab9a8006717db15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rg2d: {fileID: 0}
+  pCol2D: {fileID: 0}
+  _boosted: 0
+  _animator: {fileID: 0}
+  _boostCoolDown: 1.5
+  _boostCounter: 0
   Ring: {fileID: 116578, guid: da16c297c278fc44a86055b8fd62d8dd, type: 2}
   target: {fileID: 0}
+  previousPosition: {x: 0, y: 0}
+  force: {x: 0, y: 0}
+  minForceDistance: 0.35
+  updatePositionEvery: 0.5
+  attackFrequency: 0.8
+  _boostForce: 45
+  _boostFrequency: 0.5
+  _startBoostSpeed: 2
+  _straightDistanceOffset: 30
+  _angle: 10
+  angle: 0
+  frameCounter: 0
+  targetMovementHandler: {fileID: 0}
+  inContactWithTarget: 0
 --- !u!114 &69364805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +259,7 @@ MonoBehaviour:
   _triggerHit: 0
   reverse: 0
   index: 0
+  _animating: 0
 --- !u!58 &69364806
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -359,6 +380,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61cb9a177c06fba4186c50e2dd060e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rg2d: {fileID: 0}
+  pCol2D: {fileID: 0}
+  _boosted: 0
+  _animator: {fileID: 0}
+  _boostCoolDown: 1.5
+  _boostCounter: 0
+  isUsingController: 0
+  _startBoostForce: 45
   BoostRing: {fileID: 116578, guid: da16c297c278fc44a86055b8fd62d8dd, type: 2}
   movementDirection: {x: 0, y: 0}
 --- !u!212 &168264854
@@ -447,76 +476,7 @@ MonoBehaviour:
   _triggerHit: 0
   reverse: 0
   index: 0
---- !u!1 &186023609
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 186023610}
-  - 60: {fileID: 186023612}
-  - 114: {fileID: 186023611}
-  m_Layer: 0
-  m_Name: BumperCollider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &186023610
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 186023609}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.45, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 1845409460}
-  m_RootOrder: 0
---- !u!114 &186023611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 186023609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92ea9b8a3deffaf4bac437bf26beb8b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BoostRing: {fileID: 0}
-  movementDirection: {x: 0, y: 0}
---- !u!60 &186023612
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 186023609}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  m_Points:
-    m_Paths:
-    - - {x: 0.798617, y: 0.37547272}
-      - {x: 0.9002733, y: 0.45921084}
-      - {x: 1.0478014, y: 0.25744718}
-      - {x: 1.0788363, y: 0.027740467}
-      - {x: 1.0479224, y: -0.21677248}
-      - {x: 0.91442883, y: -0.42266542}
-      - {x: 0.80874205, y: -0.32138798}
-      - {x: 0.8867198, y: -0.21987304}
-      - {x: 0.93189955, y: -0.07831287}
-      - {x: 0.5235499, y: -0.08833774}
-      - {x: 0.52067876, y: 0.11954838}
-      - {x: 0.94003797, y: 0.11765573}
-      - {x: 0.91713965, y: 0.18958904}
+  _animating: 0
 --- !u!1 &213795373
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,8 +577,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTransforms: []
+  _camera: {fileID: 0}
+  _cameraPositionX: 0
+  _cameraPositionY: 0
+  _cameraDistance: 0
+  _damp: 0
+  _dampVelocityX: 0
+  _dampVelocityY: 0
+  _dampOrthoSize: 0
   DampSmoothTimePosition: 0.3
   DampSmoothTimeZoom: 0.1
+  _isDamping: 0
   ZoomOffset: 3
 --- !u!1 &309967804
 GameObject:
@@ -661,8 +630,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ea9b8a3deffaf4bac437bf26beb8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rg2d: {fileID: 0}
+  pCol2D: {fileID: 0}
+  _boosted: 0
+  _animator: {fileID: 0}
+  _boostCoolDown: 1.5
+  _boostCounter: 0
+  isUsingController: 0
+  _startBoostForce: 45
   BoostRing: {fileID: 0}
   movementDirection: {x: 0, y: 0}
+  movementHandler: {fileID: 0}
 --- !u!60 &309967807
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -889,8 +867,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ea9b8a3deffaf4bac437bf26beb8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rg2d: {fileID: 0}
+  pCol2D: {fileID: 0}
+  _boosted: 0
+  _animator: {fileID: 0}
+  _boostCoolDown: 1.5
+  _boostCounter: 0
+  isUsingController: 0
+  _startBoostForce: 45
   BoostRing: {fileID: 0}
   movementDirection: {x: 0, y: 0}
+  movementHandler: {fileID: 0}
 --- !u!60 &485614264
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -986,8 +973,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ea9b8a3deffaf4bac437bf26beb8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rg2d: {fileID: 0}
+  pCol2D: {fileID: 0}
+  _boosted: 0
+  _animator: {fileID: 0}
+  _boostCoolDown: 1.5
+  _boostCounter: 0
+  isUsingController: 0
+  _startBoostForce: 45
   BoostRing: {fileID: 0}
   movementDirection: {x: 0, y: 0}
+  movementHandler: {fileID: 0}
 --- !u!1 &680495011
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,8 +1111,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6791f16bc5e57c145ab9a8006717db15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rg2d: {fileID: 0}
+  pCol2D: {fileID: 0}
+  _boosted: 0
+  _animator: {fileID: 0}
+  _boostCoolDown: 1.5
+  _boostCounter: 0
   Ring: {fileID: 116578, guid: da16c297c278fc44a86055b8fd62d8dd, type: 2}
   target: {fileID: 0}
+  previousPosition: {x: 0, y: 0}
+  force: {x: 0, y: 0}
+  minForceDistance: 0.35
+  updatePositionEvery: 0.5
+  attackFrequency: 0.8
+  _boostForce: 45
+  _boostFrequency: 0.5
+  _startBoostSpeed: 2
+  _straightDistanceOffset: 30
+  _angle: 10
+  angle: 0
+  frameCounter: 0
+  targetMovementHandler: {fileID: 0}
+  inContactWithTarget: 0
 --- !u!114 &801702139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1142,6 +1158,7 @@ MonoBehaviour:
   _triggerHit: 0
   reverse: 0
   index: 0
+  _animating: 0
 --- !u!58 &801702140
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1210,7 +1227,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 801702137}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.36, y: -4.14, z: 0}
+  m_LocalPosition: {x: -3.51, y: 1.92, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -1352,8 +1369,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ea9b8a3deffaf4bac437bf26beb8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rg2d: {fileID: 0}
+  pCol2D: {fileID: 0}
+  _boosted: 0
+  _animator: {fileID: 0}
+  _boostCoolDown: 1.5
+  _boostCounter: 0
+  isUsingController: 0
+  _startBoostForce: 45
   BoostRing: {fileID: 0}
   movementDirection: {x: 0, y: 0}
+  movementHandler: {fileID: 0}
 --- !u!60 &1014573515
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1422,8 +1448,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ea9b8a3deffaf4bac437bf26beb8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rg2d: {fileID: 0}
+  pCol2D: {fileID: 0}
+  _boosted: 0
+  _animator: {fileID: 0}
+  _boostCoolDown: 1.5
+  _boostCounter: 0
+  isUsingController: 0
+  _startBoostForce: 45
   BoostRing: {fileID: 0}
   movementDirection: {x: 0, y: 0}
+  movementHandler: {fileID: 0}
 --- !u!60 &1019128834
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1542,7 +1577,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1124734260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1554,8 +1589,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6791f16bc5e57c145ab9a8006717db15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rg2d: {fileID: 0}
+  pCol2D: {fileID: 0}
+  _boosted: 0
+  _animator: {fileID: 0}
+  _boostCoolDown: 1.5
+  _boostCounter: 0
   Ring: {fileID: 116578, guid: da16c297c278fc44a86055b8fd62d8dd, type: 2}
   target: {fileID: 0}
+  previousPosition: {x: 0, y: 0}
+  force: {x: 0, y: 0}
+  minForceDistance: 0.35
+  updatePositionEvery: 0.5
+  attackFrequency: 0.8
+  _boostForce: 45
+  _boostFrequency: 0.5
+  _startBoostSpeed: 2
+  _straightDistanceOffset: 30
+  _angle: 10
+  angle: 0
+  frameCounter: 0
+  targetMovementHandler: {fileID: 0}
+  inContactWithTarget: 0
 --- !u!114 &1124734261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1581,6 +1636,7 @@ MonoBehaviour:
   _triggerHit: 0
   reverse: 0
   index: 0
+  _animating: 0
 --- !u!58 &1124734262
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1749,8 +1805,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6791f16bc5e57c145ab9a8006717db15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rg2d: {fileID: 0}
+  pCol2D: {fileID: 0}
+  _boosted: 0
+  _animator: {fileID: 0}
+  _boostCoolDown: 1.5
+  _boostCounter: 0
   Ring: {fileID: 116578, guid: da16c297c278fc44a86055b8fd62d8dd, type: 2}
   target: {fileID: 0}
+  previousPosition: {x: 0, y: 0}
+  force: {x: 0, y: 0}
+  minForceDistance: 0.35
+  updatePositionEvery: 0.5
+  attackFrequency: 0.8
+  _boostForce: 45
+  _boostFrequency: 0.5
+  _startBoostSpeed: 2
+  _straightDistanceOffset: 30
+  _angle: 10
+  angle: 0
+  frameCounter: 0
+  targetMovementHandler: {fileID: 0}
+  inContactWithTarget: 0
 --- !u!114 &1545768664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1776,6 +1852,7 @@ MonoBehaviour:
   _triggerHit: 0
   reverse: 0
   index: 0
+  _animating: 0
 --- !u!58 &1545768665
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1850,7 +1927,7 @@ Transform:
   m_Children:
   - {fileID: 309967805}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
 --- !u!1 &1690654102
 GameObject:
   m_ObjectHideFlags: 0
@@ -1879,6 +1956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fpsText: {fileID: 1736983981}
+  frames: 60
 --- !u!4 &1690654104
 Transform:
   m_ObjectHideFlags: 0
@@ -2007,8 +2085,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ea9b8a3deffaf4bac437bf26beb8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rg2d: {fileID: 0}
+  pCol2D: {fileID: 0}
+  _boosted: 0
+  _animator: {fileID: 0}
+  _boostCoolDown: 1.5
+  _boostCounter: 0
+  isUsingController: 0
+  _startBoostForce: 45
   BoostRing: {fileID: 0}
   movementDirection: {x: 0, y: 0}
+  movementHandler: {fileID: 0}
 --- !u!60 &1744571584
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2036,139 +2123,6 @@ PolygonCollider2D:
       - {x: 0.52067876, y: 0.11954838}
       - {x: 0.94003797, y: 0.11765573}
       - {x: 0.91713965, y: 0.18958904}
---- !u!1 &1845409454
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1845409460}
-  - 212: {fileID: 1845409459}
-  - 50: {fileID: 1845409458}
-  - 58: {fileID: 1845409457}
-  - 114: {fileID: 1845409456}
-  - 114: {fileID: 1845409455}
-  m_Layer: 0
-  m_Name: Bot (4)
-  m_TagString: Entity/GameEntity
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1845409455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1845409454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6791f16bc5e57c145ab9a8006717db15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Ring: {fileID: 116578, guid: da16c297c278fc44a86055b8fd62d8dd, type: 2}
-  target: {fileID: 0}
---- !u!114 &1845409456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1845409454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ff09bdb62f00cf4c9af3beb0db9198a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sprites:
-  - {fileID: 21300000, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  - {fileID: 21300002, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  - {fileID: 21300004, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  - {fileID: 21300006, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  - {fileID: 21300008, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  - {fileID: 21300010, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  - {fileID: 21300012, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  - {fileID: 21300014, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  - {fileID: 21300016, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  _bumperActive: 0
-  _triggerHit: 0
-  reverse: 0
-  index: 0
---- !u!58 &1845409457
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1845409454}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.62845945
---- !u!50 &1845409458
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1845409454}
-  m_UseAutoMass: 0
-  m_Mass: 0.4
-  m_LinearDrag: 1
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
---- !u!212 &1845409459
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1845409454}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_ReflectionProbeUsage: 0
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
---- !u!4 &1845409460
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1845409454}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.92, y: -4.04, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children:
-  - {fileID: 186023610}
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
 --- !u!1 &2048493599
 GameObject:
   m_ObjectHideFlags: 0
@@ -2310,6 +2264,7 @@ MonoBehaviour:
   _triggerHit: 0
   reverse: 0
   index: 0
+  _animating: 0
 --- !u!58 &2064410308
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2396,5 +2351,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6791f16bc5e57c145ab9a8006717db15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rg2d: {fileID: 0}
+  pCol2D: {fileID: 0}
+  _boosted: 0
+  _animator: {fileID: 0}
+  _boostCoolDown: 1.5
+  _boostCounter: 0
   Ring: {fileID: 116578, guid: da16c297c278fc44a86055b8fd62d8dd, type: 2}
   target: {fileID: 0}
+  previousPosition: {x: 0, y: 0}
+  force: {x: 0, y: 0}
+  minForceDistance: 0.35
+  updatePositionEvery: 0.5
+  attackFrequency: 0.8
+  _boostForce: 45
+  _boostFrequency: 0.5
+  _startBoostSpeed: 2
+  _straightDistanceOffset: 30
+  _angle: 10
+  angle: 0
+  frameCounter: 0
+  targetMovementHandler: {fileID: 0}
+  inContactWithTarget: 0

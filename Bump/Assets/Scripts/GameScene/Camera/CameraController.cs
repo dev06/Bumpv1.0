@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-
+using System.Collections; 
 public class CameraController : MonoBehaviour {
 
 	public List<Transform> targetTransforms;
@@ -12,10 +12,10 @@ public class CameraController : MonoBehaviour {
 	private float _dampVelocityX = 0.0f;
 	private float _dampVelocityY = 0.0f;
 	private float _dampOrthoSize = 0.0f;
-	public float DampSmoothTimePosition = 0;
+	public float DampSmoothTimePosition = .1f;
 	public float DampSmoothTimeZoom = 0.1F;
 
-
+	private bool _isDamping;
 	public float ZoomOffset = 5.0f;
 	void Start () {
 		_camera = GetComponent<Camera>();
@@ -38,23 +38,29 @@ public class CameraController : MonoBehaviour {
 
 
 
-			Logger.Log(_damp);
+			Logger.Log("Damp => " + _damp + " Is damping => " + _isDamping); 
 			if (_damp)
 			{
+				_isDamping = true;
+				
+
 				float _dampX = Mathf.SmoothDamp(transform.position.x, _camX, ref _dampVelocityX, DampSmoothTimePosition);
 				float _dampY = Mathf.SmoothDamp(transform.position.y, _camY, ref _dampVelocityY, DampSmoothTimePosition);
+						
 				transform.position = new Vector3(_dampX, _dampY, -1);
+				
 				float _dampOrtho = Mathf.SmoothDamp(_camera.orthographicSize, _cameraDistance + ZoomOffset, ref _dampOrthoSize, DampSmoothTimeZoom);
-				_camera.orthographicSize = _dampOrtho;
+
+				//_camera.orthographicSize = _dampOrtho;
 			} else {
 				transform.position = new Vector3(_camX, _camY, -1);
-				_camera.orthographicSize = _cameraDistance + ZoomOffset; 
+				//_camera.orthographicSize = _cameraDistance + ZoomOffset;
 			}
-
 
 
 		}
 	}
+
 
 
 	float GetDistance(Transform current, Transform next)
@@ -71,7 +77,7 @@ public class CameraController : MonoBehaviour {
 		{
 			if (targetTransforms[i] != null)
 			{
-				_damp = false;
+
 				_camX += targetTransforms[i].position.x;
 				_camY += targetTransforms[i].position.y;
 

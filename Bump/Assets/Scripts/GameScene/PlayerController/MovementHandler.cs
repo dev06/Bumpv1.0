@@ -7,7 +7,7 @@ public class MovementHandler : EntityMovementHandler
     #region--- PRIVATE MEMBERS---
 
     private bool isUsingController = false;
-    private float _startBoostForce = 45f; 
+    private float _startBoostForce = 45f;
 
     #endregion---/PRIVATE MEMEBERS
 
@@ -72,6 +72,12 @@ public class MovementHandler : EntityMovementHandler
                     AddExternalObject(BoostRing, transform.position, transform.rotation);
                 }
             }
+
+            if (Input.GetMouseButton(0) && _animator._triggerHit == false && _animator._bumperActive == false)
+            {
+                _animator._triggerHit = true;
+                _animator._bumperActive = true;
+            }
         }
 
         if (isMoving(false, movement)) {
@@ -85,7 +91,7 @@ public class MovementHandler : EntityMovementHandler
     }
 
 
-    public bool IsBumperActive{
-        get{return _animator._bumperActive; }
+    public bool IsBumperActive {
+        get {return _animator._bumperActive; }
     }
 }
