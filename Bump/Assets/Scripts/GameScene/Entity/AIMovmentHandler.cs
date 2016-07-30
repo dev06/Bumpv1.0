@@ -57,8 +57,6 @@ public class AIMovmentHandler : EntityMovementHandler {
 		AnimateBotBumper(1);
 		CanBoost();
 		UseBoost();
-
-
 	}
 
 	///summary
@@ -128,12 +126,12 @@ public class AIMovmentHandler : EntityMovementHandler {
 			{
 				if (targetMovementHandler.IsBumperActive)
 				{
-					Evade(15f); 
+					Evade(15f);
 				} else
 				{
 					if ( Random.Range(0, 20) < 4)
 					{
-						Evade(15); 
+						Evade(15);
 					}
 				}
 			}
@@ -146,7 +144,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 		float angle = (int)GetAngle();
 		Vector2 addedForce = new Vector2(Mathf.Sin(angle) * MathUtil.RangeBetweenTwo(-1, 1), Mathf.Cos(angle) * MathUtil.RangeBetweenTwo(-1, 1));
 
-		Vector2 finalForce = (opposingForce *intensity) + addedForce *intensity;
+		Vector2 finalForce = (opposingForce * intensity) + addedForce * intensity;
 		FaceFoward(transform, finalForce);
 		rg2d.AddForce(finalForce);
 	}
@@ -189,16 +187,18 @@ public class AIMovmentHandler : EntityMovementHandler {
 			}
 		}
 
-		bool withinRange = Vector2.Distance(target.transform.position, transform.position) < minForceDistance * 2.0f;
+		bool withinRange = Vector2.Distance(target.transform.position, transform.position) < minForceDistance * 3.0f;
 		float targetVelocity = (target.GetComponent<Rigidbody2D>() != null) ? target.GetComponent<Rigidbody2D>().velocity.SqrMagnitude() : 0;
 		if (withinRange)
 		{
-			if (targetVelocity > 30.0f)
+			if (rg2d.velocity.SqrMagnitude() < targetVelocity)
 			{
-				Evade(10f); 
+				if (targetVelocity > 30.0f)
+				{
+					Evade(targetVelocity / 3.0f);
+				}
 			}
 		}
-
 	}
 
 }
