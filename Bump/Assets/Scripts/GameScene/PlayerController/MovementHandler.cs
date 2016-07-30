@@ -7,13 +7,13 @@ public class MovementHandler : EntityMovementHandler
     #region--- PRIVATE MEMBERS---
 
     private bool isUsingController = false;
-    public Vector2 movementDirection; 
+    private float _startBoostForce = 45f; 
 
     #endregion---/PRIVATE MEMEBERS
 
 
     public GameObject BoostRing;
-  
+    public Vector2 movementDirection;
 
 
 
@@ -31,6 +31,7 @@ public class MovementHandler : EntityMovementHandler
         CanBoost();
         Move();
 
+
     }
 
     /// <summary>
@@ -42,14 +43,14 @@ public class MovementHandler : EntityMovementHandler
         float vertical = Input.GetAxis((GameSceneManager.isControllerConnected) ? Constants.CONTROLLER_LEFT_STICK_VERTICAL : Constants.VERTICAL);
         Vector2 movement = new Vector2(horizontal, vertical);
         rg2d.AddForce(movement);
-        movementDirection = movement; 
+        movementDirection = movement;
 
         if (GameSceneManager.isControllerConnected)
         {
             if (Input.GetButtonDown(Constants.CONTROLLER_X_BUTTON))
             {
                 bool boost;
-                Boost(movement, 60f, out boost);
+                Boost(movement, _startBoostForce, out boost);
                 if (boost) {
                     AddExternalObject(BoostRing, transform.position, transform.rotation);
                 }
@@ -66,7 +67,7 @@ public class MovementHandler : EntityMovementHandler
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 bool boost;
-                Boost(movement, 60f, out boost);
+                Boost(movement, _startBoostForce, out boost);
                 if (_boosted) {
                     AddExternalObject(BoostRing, transform.position, transform.rotation);
                 }
@@ -80,28 +81,11 @@ public class MovementHandler : EntityMovementHandler
         } else {
             _animator.ResetIndex();
         }
-
-
-
-
-
-      
-        FaceFoward(transform, movement); 
+        FaceFoward(transform, movement);
     }
 
 
-
-
-    /// <summary>
-    /// Boosts the Player
-    /// </summary>
-    /// <param name="movement"></param>
-    /// <param name="boost"></param>
-
-
-    /// <summary>
-    /// Manages Boost Functionalty
-    /// </summary>
-
-
+    public bool IsBumperActive{
+        get{return _animator._bumperActive; }
+    }
 }

@@ -15,6 +15,9 @@ public class AIMovmentHandler : EntityMovementHandler {
 	private float minForceDistance           = .35f; //when to stop adding force
 	private float updatePositionEvery        = .5f;
 	private float attackFrequency            = .8f;  //0.0f (0%) - 1.0f (100%)
+	private float _boostForce 				 = 45f;
+	private float _boostFrequency 			 = .5f;
+	private float _startBoostSpeed           = 2.0f;
 	private float _straightDistanceOffset    = 30f;
 	private float _angle                     = 10f;
 	private float angle;
@@ -53,6 +56,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 		UseEvasion();
 		AnimateBotBumper(1);
 		CanBoost();
+		UseBoost();
 
 
 	}
@@ -79,15 +83,16 @@ public class AIMovmentHandler : EntityMovementHandler {
 
 	private Vector2 GetProjectedVector()
 	{
+		float generation = 1;
 		Vector2 currentPosition = target.transform.position;
 		float dy =  currentPosition.y - previousPosition.y;
 		float dx =  currentPosition.x - previousPosition.x;
 		float distance = Vector2.Distance(target.transform.position, transform.position);
-		float px = currentPosition.x + (dx * Mathf.Pow(distance, 2));
-		float py = currentPosition.y + (dy * Mathf.Pow(distance, 2));
+		float px = currentPosition.x + (dx * Mathf.Pow(distance, generation));
+		float py = currentPosition.y + (dy * Mathf.Pow(distance, generation));
 		Vector2 projectedVector = new Vector2(px, py);
 		previousPosition = currentPosition;
-		Logger.Log(gameObject); 
+
 		return projectedVector;
 	}
 
@@ -98,7 +103,6 @@ public class AIMovmentHandler : EntityMovementHandler {
 			force = GetProjectedVector();
 			frameCounter = 0;
 		}
-		Boost(force, 60);
 		AddSimpleForce(force);
 	}
 
@@ -116,16 +120,35 @@ public class AIMovmentHandler : EntityMovementHandler {
 	private void UseEvasion() {
 		bool withinRange = Vector2.Distance(target.transform.position, transform.position) < minForceDistance;
 
-		if (withinRange && Random.Range(0, 20) < 4)
-		{
-			Vector2 opposingForce = transform.position - target.transform.position;
-			float angle = (int)GetAngle();
-			Vector2 addedForce = new Vector2(Mathf.Sin(angle) * Random.Range(-1, 1), Mathf.Cos(angle) * Random.Range(-1, 1));
 
-			Vector2 finalForce = (opposingForce * 15.0f) + addedForce * 15.0f;
-			FaceFoward(transform, finalForce);
-			rg2d.AddForce(finalForce);
+		if (withinRange)
+		{
+
+			if (targetMovementHandler != null)
+			{
+				if (targetMovementHandler.IsBumperActive)
+				{
+					Evade(15f); 
+				} else
+				{
+					if ( Random.Range(0, 20) < 4)
+					{
+						Evade(15); 
+					}
+				}
+			}
 		}
+	}
+
+	private void Evade(float intensity)
+	{
+		Vector2 opposingForce = transform.position - target.transform.position;
+		float angle = (int)GetAngle();
+		Vector2 addedForce = new Vector2(Mathf.Sin(angle) * MathUtil.RangeBetweenTwo(-1, 1), Mathf.Cos(angle) * MathUtil.RangeBetweenTwo(-1, 1));
+
+		Vector2 finalForce = (opposingForce *intensity) + addedForce *intensity;
+		FaceFoward(transform, finalForce);
+		rg2d.AddForce(finalForce);
 	}
 
 	private float GetAngle()
@@ -148,6 +171,34 @@ public class AIMovmentHandler : EntityMovementHandler {
 		{
 			_animator.ResetIndex();
 		}
+	}
+
+	private void UseBoost()
+	{
+
+		if (Random.Range(0, 1) <= _boostFrequency)
+		{
+			if (rg2d.velocity.SqrMagnitude() > _startBoostSpeed)
+			{
+				bool boosted;
+				Boost(force.normalized, _boostForce, out boosted);
+				if (boosted)
+				{
+					AddExternalObject(Ring, transform.position, transform.rotation);
+				}
+			}
+		}
+
+		bool withinRange = Vector2.Distance(target.transform.position, transform.position) < minForceDistance * 2.0f;
+		float targetVelocity = (target.GetComponent<Rigidbody2D>() != null) ? target.GetComponent<Rigidbody2D>().velocity.SqrMagnitude() : 0;
+		if (withinRange)
+		{
+			if (targetVelocity > 30.0f)
+			{
+				Evade(10f); 
+			}
+		}
+
 	}
 
 }
