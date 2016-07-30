@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour {
 	public float ZoomOffset = 2.0f;
 	void Start () {
 		_camera = GetComponent<Camera>();
-		Zoom = Zoom / targetTransforms.Count;
+	
 	}
 
 	void Update ()
@@ -22,8 +22,8 @@ public class CameraController : MonoBehaviour {
 		{
 			for (int i = 0; i < targetTransforms.Count; i++)
 			{
-				float currentTransformX = targetTransforms[i].position.x / 1.0f;
-				float currentTransformY = targetTransforms[i].position.y / 1.0f;
+				float currentTransformX = targetTransforms[i].position.x / 2.0f;
+				float currentTransformY = targetTransforms[i].position.y / 2.0f;
 				_cameraPositionX += (currentTransformX);
 				_cameraPositionY += (currentTransformY);
 				if (i < targetTransforms.Count - 1)
