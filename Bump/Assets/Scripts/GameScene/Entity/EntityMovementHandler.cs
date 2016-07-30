@@ -41,6 +41,7 @@ public class EntityMovementHandler : MonoBehaviour {
 		{
 			Vector2 force = movement * boost;
 			rg2d.AddForce(force);
+
 			_boosted = true;
 			isBoosting = _boosted;
 		} else {
@@ -55,6 +56,7 @@ public class EntityMovementHandler : MonoBehaviour {
 		{
 			Vector2 force = movement * boost;
 			rg2d.AddForce(force);
+			Logger.Log("Force Added"); 
 			_boosted = true;
 		}
 	}
