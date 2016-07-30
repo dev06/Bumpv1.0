@@ -22,7 +22,7 @@ public class Bumper : MovementHandler {
 
     void Update()
     {
-        
+
     }
 
 
@@ -35,7 +35,11 @@ public class Bumper : MovementHandler {
                 Vector3 direction = col.gameObject.transform.position - transform.parent.transform.position;
                 float impulse = (Constants.BUMPER_IMPULSE_MAG * GetComponentInParent<Rigidbody2D>().velocity.SqrMagnitude()) + Constants.BASE_BUMPER_IMPLUSE;
                 col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction.normalized * impulse);
-               // AddExternalObject(BoostRing, transform.position, transform.rotation);
+                // AddExternalObject(BoostRing, transform.position, transform.rotation);
+                if (col.gameObject.name.Equals("Player") == false)
+                {
+                    Destroy(col.gameObject);
+                }
             }
         }
     }

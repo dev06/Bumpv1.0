@@ -52,11 +52,8 @@ public class AIMovmentHandler : EntityMovementHandler {
 
 	// Update is called once per framesd
 	void Update () {
-		UseProjectedTrajectory();
-		UseEvasion();
+		Move(); 
 		AnimateBotBumper(1);
-		CanBoost();
-		UseBoost();
 	}
 
 	///summary
@@ -64,7 +61,10 @@ public class AIMovmentHandler : EntityMovementHandler {
 	///summary
 	private void Move()
 	{
-
+		UseProjectedTrajectory();
+		UseEvasion();
+		CanBoost();
+		UseBoost();
 	}
 
 	private void AddSimpleForce(Vector2 targetVec)
@@ -90,8 +90,6 @@ public class AIMovmentHandler : EntityMovementHandler {
 		float py = currentPosition.y + (dy * Mathf.Pow(distance, generation));
 		Vector2 projectedVector = new Vector2(px, py);
 		previousPosition = currentPosition;
-
-		Logger.Log(previousPosition); 
 
 		return projectedVector;
 	}

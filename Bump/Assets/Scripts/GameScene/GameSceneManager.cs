@@ -15,7 +15,7 @@ public class GameSceneManager : MonoBehaviour {
 
     void Awake () {
 
-        IsControlledConnected(); 
+        IsControlledConnected();
     }
 
 
@@ -54,6 +54,8 @@ public class GameSceneManager : MonoBehaviour {
                 isControllerConnected = true;
                 Debug.Log(joyStickNames[i] + " is connected");
             }
+
+            
         }
         return isControllerConnected;
     }
