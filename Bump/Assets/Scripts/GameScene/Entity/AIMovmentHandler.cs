@@ -87,7 +87,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 		float py = currentPosition.y + (dy * Mathf.Pow(distance, 2));
 		Vector2 projectedVector = new Vector2(px, py);
 		previousPosition = currentPosition;
-		Logger.Log(gameObject); 
+		Logger.Log(previousPosition); 
 		return projectedVector;
 	}
 
@@ -98,7 +98,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 			force = GetProjectedVector();
 			frameCounter = 0;
 		}
-		Boost(force, 60);
+		//Boost(force, 60);
 		AddSimpleForce(force);
 	}
 
