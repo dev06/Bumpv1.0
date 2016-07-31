@@ -16,7 +16,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 	private float updatePositionEvery        = .5f;
 	private float attackFrequency            = .8f;  //0.0f (0%) - 1.0f (100%)
 	private float _boostForce 				 = 45f;
-	private float _boostFrequency 			 = .5f;
+	private float _boostFrequency 			 = .02f;
 	private float _startBoostSpeed           = 2.0f;
 	private float _straightDistanceOffset    = 30f;
 	private float _angle                     = 10f;
@@ -175,7 +175,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 	private void UseBoost()
 	{
 
-		if (Random.Range(0, 1) <= _boostFrequency)
+		if (Random.Range(0.0f, 1.0f) <= _boostFrequency)
 		{
 			if (rg2d.velocity.SqrMagnitude() > _startBoostSpeed)
 			{
