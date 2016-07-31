@@ -9,12 +9,13 @@ public class GameSceneManager : MonoBehaviour {
     private GameObject GameCanvas;
     private int frames = 60;
 
-
+    private int hello;
     void Awake () {
 
         Init();
         IsControlledConnected();
         LoadEnvironment();
+
 
     }
 
@@ -35,7 +36,37 @@ public class GameSceneManager : MonoBehaviour {
         if (frames % 60 == 0)
         {
             fpsText.text = "" + (int)(1.0f / Time.deltaTime);
+
             frames = 0;
+        }
+
+
+        if (mapping)
+        {
+            MapController();
+        } else {
+            if(Input.GetKeyDown("joystick 1 button " + hello)){
+                Logger.Log("Hello World!"); 
+            }
+        }
+
+
+
+    }
+
+    bool mapping = true;
+    void MapController()
+    {
+        for (int i = 0; i < 20; i++) {
+            if (Input.GetKeyDown("joystick 1 button " + i)) {
+                hello = i; 
+                Logger.Log("Map To => " + i); 
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            mapping = false;
         }
     }
 
