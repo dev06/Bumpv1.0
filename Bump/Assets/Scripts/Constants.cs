@@ -14,7 +14,7 @@ public class Constants {
     public const string CONTROLLER_SQUARE_BUTTON = "SquareButton"; 
 
 
-    public const float BUMPER_IMPULSE_MAG = 2.0F;
-    public const float BASE_BUMPER_IMPLUSE = 45.0F;  
+    public const float BUMPER_IMPULSE_MAG = 22f;
+    public const float BASE_BUMPER_IMPLUSE = 200.0F;  
 
 }

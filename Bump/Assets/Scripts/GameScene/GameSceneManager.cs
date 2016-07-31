@@ -59,7 +59,6 @@ public class GameSceneManager : MonoBehaviour {
         GameObject environment = Instantiate(Resources.Load("Environment/Frozen"), Vector3.zero, Quaternion.identity) as GameObject;
         environment.name = "Frozen";
         RectTransform _rTransform = environment.GetComponent<RectTransform>(); 
-        Logger.Log(_rTransform.sizeDelta); 
         environment.transform.parent = GameCanvas.transform;
     }
 

@@ -7,7 +7,7 @@ public class BoostRing : MonoBehaviour {
     private SpriteRenderer _sRenderer;
     private Color _color;
     private float _colorAlpha = 1.0f;
-    private float _scaleIncrementRate = .01f;
+    private float _scaleIncrementRate = 1f;
     void Start()
     {
         _transform = GetComponent<Transform>();
