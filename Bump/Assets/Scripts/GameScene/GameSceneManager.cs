@@ -5,17 +5,22 @@ public class GameSceneManager : MonoBehaviour {
 
 
     public static bool isControllerConnected;
-
     public Text fpsText;
-
-
-
+    private GameObject GameCanvas;
     private int frames = 60;
 
 
     void Awake () {
 
+        Init();
         IsControlledConnected();
+        LoadEnvironment();
+
+    }
+
+    void Init()
+    {
+        GameCanvas = GameObject.FindWithTag("Canvas/GameCanvas");
     }
 
 
@@ -26,23 +31,14 @@ public class GameSceneManager : MonoBehaviour {
         {
             Application.Quit();
         }
-
-
         frames++;
         if (frames % 60 == 0)
         {
             fpsText.text = "" + (int)(1.0f / Time.deltaTime);
             frames = 0;
         }
-
-
-        //Debug.Log(Input.IsJoystickPreconfigured(Input.GetJoystickNames()[0]));
     }
 
-    /// <summary>
-    /// Checks to see if any controllers are connected
-    /// </summary>
-    /// <returns></returns>
     bool IsControlledConnected()
     {
         string[] joyStickNames = Input.GetJoystickNames();
@@ -54,9 +50,19 @@ public class GameSceneManager : MonoBehaviour {
                 isControllerConnected = true;
                 Debug.Log(joyStickNames[i] + " is connected");
             }
-
-            
         }
         return isControllerConnected;
     }
+
+    public void LoadEnvironment()
+    {
+        GameObject environment = Instantiate(Resources.Load("Environment/Frozen"), Vector3.zero, Quaternion.identity) as GameObject;
+        environment.name = "Frozen";
+        RectTransform _rTransform = environment.GetComponent<RectTransform>(); 
+        Logger.Log(_rTransform.sizeDelta); 
+        environment.transform.parent = GameCanvas.transform;
+    }
+
+
+
 }
