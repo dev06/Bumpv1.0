@@ -36,7 +36,7 @@ public class Bumper : MovementHandler {
                 float impulse = (Constants.BUMPER_IMPULSE_MAG * Mathf.Sqrt(GetComponentInParent<Rigidbody2D>().velocity.SqrMagnitude())) + Constants.BASE_BUMPER_IMPLUSE;
                 col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction.normalized * impulse);
             
-                if (col.gameObject.name.Equals("Player") == false)
+                if (col.gameObject.name.Equals("Player") == false && transform.parent.name.Equals("Bot(Clone)") == false)
                 {
                     Destroy(col.gameObject);
                 }

@@ -25,6 +25,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 	private float _evadeForce                = 400f;
 	private float angle;
 	private float frameCounter;
+	public Color _color; 
 
 
 	//target instances
@@ -41,22 +42,27 @@ public class AIMovmentHandler : EntityMovementHandler {
 	void InitThis() {
 		if (target == null)
 		{
-			target = GameObject.Find("Player");
+		
 		}
 		previousPosition = target.transform.position;
 
 		if (target.GetComponent<MovementHandler>() != null)
 		{
 			targetMovementHandler = target.GetComponent<MovementHandler>();
+
 		}
 
 		_animator = GetComponent<CustomAnimator>();
+		GetComponent<SpriteRenderer>().color = _color; 
+		
 	}
 
 	// Update is called once per framesd
 	void Update () {
 		Move();
 		AnimateBotBumper(1);
+
+
 
 	}
 
@@ -129,6 +135,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 
 			if (targetMovementHandler != null)
 			{
+
 				if (targetMovementHandler.IsBumperActive)
 				{
 					float value = Random.Range(0.0f, 1.0f);
@@ -194,7 +201,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 				Boost(force.normalized, _boostForce, out boosted);
 				if (boosted)
 				{
-					AddExternalObject(Ring, transform.position, transform.rotation);
+					AddExternalObject(Ring, transform.position, transform.rotation, _color);
 				}
 			}
 		}
@@ -205,7 +212,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 		{
 			if (rg2d.velocity.SqrMagnitude() < targetVelocity)
 			{
-			
+
 				if (targetVelocity > 100.0f)
 				{
 					Evade(targetVelocity / 30.0f);

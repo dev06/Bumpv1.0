@@ -22,14 +22,10 @@ public class CameraController : MonoBehaviour {
 	public float DampSmoothTimeZoom = 0.1F;
 	public float ZoomOffset = 2.0f;
 	private float targetDamp;
+	private bool damp;
 
 	void Start () {
 		_camera = GetComponent<Camera>();
-		for (int i = 0; i < GameObject.FindGameObjectsWithTag("Entity/GameEntity").Length; i++)
-		{
-			targetTransforms.Add(GameObject.FindGameObjectsWithTag("Entity/GameEntity")[i].transform);
-		}
-
 	}
 
 	void Update ()
@@ -41,14 +37,23 @@ public class CameraController : MonoBehaviour {
 			float _cameraDistance;
 
 			GetAverageCameraPositionAndCameraDistance(out _camX, out _camY, out _cameraDistance);
+
+			DampSmoothTimePosition = Mathf.SmoothDamp(DampSmoothTimePosition, 0, ref targetDamp, .25f);
+
 			float _dampY = Mathf.SmoothDamp(transform.position.y, _camY, ref _dampVelocityY, DampSmoothTimePosition);
 			float _dampX = Mathf.SmoothDamp(transform.position.x, _camX, ref _dampVelocityX, DampSmoothTimePosition);
 			transform.position = new Vector3(_dampX, _dampY, -1);
-			DampSmoothTimePosition = (targetTransforms.Count == 1) ? Mathf.SmoothDamp(DampSmoothTimePosition, 0, ref targetDamp, .25f) : DampSmoothTimePosition;
+
+
+
+
+			//DampSmoothTimePosition = (targetTransforms.Count == 1) ? Mathf.SmoothDamp(DampSmoothTimePosition, 0, ref targetDamp, .25f) : DampSmoothTimePosition;
 			float _dampOrtho = Mathf.SmoothDamp(_camera.orthographicSize, (_cameraDistance) + ZoomOffset, ref _dampOrthoSize, DampSmoothTimeZoom);
 			_camera.orthographicSize = _dampOrtho;
 		}
 	}
+
+
 
 
 
@@ -96,14 +101,17 @@ public class CameraController : MonoBehaviour {
 			} else
 			{
 				targetTransforms.Remove(targetTransforms[i]);
+				DampSmoothTimePosition = .5f;
+				damp = true;
 			}
 		}
 
 
 		count = Mathf.SmoothDamp(prevCount, count, ref vel, .01f);
+
 		prevCount = count;
 		_cameraDistance /= count;
-	
+
 		_camX /= count;
 		_camY /= count;
 

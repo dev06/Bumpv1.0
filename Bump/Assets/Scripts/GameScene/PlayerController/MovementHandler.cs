@@ -7,7 +7,8 @@ public class MovementHandler : EntityMovementHandler
     #region--- PRIVATE MEMBERS---
 
     private bool isUsingController = false;
-    private float _startBoostForce = 1000f;
+    private float _startBoostForce = 2000f;
+    public Color color; 
 
     #endregion---/PRIVATE MEMEBERS
 
@@ -24,6 +25,8 @@ public class MovementHandler : EntityMovementHandler
         rg2d = GetComponent<Rigidbody2D>();
         pCol2D = transform.FindChild("BumperCollider").GetComponent<PolygonCollider2D>();
         _animator = GetComponent<CustomAnimator>();
+        GetComponent<SpriteRenderer>().color = color; 
+
     }
 
 
@@ -45,6 +48,7 @@ public class MovementHandler : EntityMovementHandler
         float vertical = Input.GetAxis((GameSceneManager.isControllerConnected) ? Constants.CONTROLLER_LEFT_STICK_VERTICAL : Constants.VERTICAL);
         Vector2 movement = new Vector2(horizontal, vertical);
         rg2d.AddForce(movement * Velocity);
+
         movementDirection = movement;
 
         if (GameSceneManager.isControllerConnected)
@@ -54,7 +58,7 @@ public class MovementHandler : EntityMovementHandler
                 bool boost;
                 Boost(movement, _startBoostForce, out boost);
                 if (boost) {
-                    AddExternalObject(BoostRing, transform.position, transform.rotation);
+                    AddExternalObject(BoostRing, transform.position, transform.rotation,color);
                 }
             }
 
@@ -71,7 +75,7 @@ public class MovementHandler : EntityMovementHandler
                 bool boost;
                 Boost(movement, _startBoostForce, out boost);
                 if (_boosted) {
-                    AddExternalObject(BoostRing, transform.position, transform.rotation);
+                    AddExternalObject(BoostRing, transform.position, transform.rotation,color);
                 }
             }
 
@@ -96,6 +100,8 @@ public class MovementHandler : EntityMovementHandler
 
 
     public bool IsBumperActive {
-        get {return _animator._bumperActive; }
+
+        get { return _animator._bumperActive; }
+
     }
 }

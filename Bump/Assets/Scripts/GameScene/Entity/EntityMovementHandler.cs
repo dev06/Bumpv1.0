@@ -7,7 +7,7 @@ public class EntityMovementHandler : MonoBehaviour {
 	protected PolygonCollider2D pCol2D;
 	protected bool _boosted = false;
 	protected CustomAnimator _animator;
-	protected float _boostCoolDown         = 1.5f;
+	protected float _boostCoolDown         = 1f;
 	protected float _boostCounter          = 0.0f;
 
 
@@ -74,9 +74,10 @@ public class EntityMovementHandler : MonoBehaviour {
 		}
 	}
 
-	protected void AddExternalObject(GameObject obj, Vector3 position, Quaternion rotation)
+	protected void AddExternalObject(GameObject obj, Vector3 position, Quaternion rotation, Color color)
 	{
 		GameObject ring = Instantiate(obj, position, rotation) as GameObject;
+		if(ring.GetComponent<SpriteRenderer>() !=null) ring.GetComponent<SpriteRenderer>().color = color; 
 	}
 
 	protected void AnimateBumper(int rate) {

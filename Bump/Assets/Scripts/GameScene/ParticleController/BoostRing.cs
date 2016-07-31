@@ -17,7 +17,7 @@ public class BoostRing : MonoBehaviour {
     void Update () {
         _transform.localScale += new Vector3(_scaleIncrementRate, _scaleIncrementRate, _scaleIncrementRate);
         _colorAlpha -= Time.deltaTime * 2.0f;
-        _sRenderer.color = new Color(1, 1, 1, _colorAlpha);
+        _sRenderer.color = new Color(_sRenderer.color.r,_sRenderer.color.g, _sRenderer.color.b, _colorAlpha);
         if (_colorAlpha < 0) Destroy(gameObject);
     }
 
