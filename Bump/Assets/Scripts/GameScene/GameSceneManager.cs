@@ -45,8 +45,8 @@ public class GameSceneManager : MonoBehaviour {
         {
             MapController();
         } else {
-            if(Input.GetKeyDown("joystick 1 button " + hello)){
-                Logger.Log("Hello World!"); 
+            if (Input.GetKeyDown("joystick 1 button " + hello)) {
+                Logger.Log("Hello World!");
             }
         }
 
@@ -58,11 +58,18 @@ public class GameSceneManager : MonoBehaviour {
     void MapController()
     {
         for (int i = 0; i < 20; i++) {
-            if (Input.GetKeyDown("joystick 1 button " + i)) {
-                hello = i; 
-                Logger.Log("Map To => " + i); 
+            if (Input.GetAxis("Z") == 0)            {
+                if (Input.GetKeyDown("joystick 1 button " + i)) {
+                    hello = i;
+                    Logger.Log("Map To => " + i);
+                }
+            }else{
+                Logger.Log("Press choose another button"); 
             }
+
         }
+
+       
 
         if (Input.GetKeyDown(KeyCode.Q))
         {

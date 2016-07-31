@@ -11,7 +11,7 @@ public class Instantiator : MonoBehaviour {
 	void Awake () {
 		Init(); 
 		InstantiatePlayer(); 
-		InstantiateAI(6); 
+		//InstantiateAI(6); 
 	}
 
 	private void Init()
