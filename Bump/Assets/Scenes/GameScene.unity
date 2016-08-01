@@ -418,6 +418,7 @@ GameObject:
   - 4: {fileID: 1690654104}
   - 114: {fileID: 1690654103}
   - 114: {fileID: 1690654105}
+  - 114: {fileID: 1690654106}
   m_Layer: 0
   m_Name: GameSceneManager
   m_TagString: Untagged
@@ -464,6 +465,18 @@ MonoBehaviour:
   Player: {fileID: 149802, guid: d55ee731a42012c42b84d6734658996f, type: 2}
   AI: {fileID: 182384, guid: f7d8b739ba9475845a40c450aa1d9c1b, type: 2}
   GameCanvas: {fileID: 1003911196}
+--- !u!114 &1690654106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1690654102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e15632bdf005143ace81d00d5db9eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMappingController: 0
 --- !u!1 &1736983979
 GameObject:
   m_ObjectHideFlags: 0

@@ -41,41 +41,41 @@ public class GameSceneManager : MonoBehaviour {
         }
 
 
-        if (mapping)
-        {
-            MapController();
-        } else {
-            if (Input.GetKeyDown("joystick 1 button " + hello)) {
-                Logger.Log("Hello World!");
-            }
-        }
+        // if (mapping)
+        // {
+        //     MapController();
+        // } else {
+        //     if (Input.GetKeyDown("joystick 1 button " + hello)) {
+        //         Logger.Log("Hello World!");
+        //     }
+        // }
 
 
 
     }
 
-    bool mapping = true;
-    void MapController()
-    {
-        for (int i = 0; i < 20; i++) {
-            if (Input.GetAxis("Z") == 0)            {
-                if (Input.GetKeyDown("joystick 1 button " + i)) {
-                    hello = i;
-                    Logger.Log("Map To => " + i);
-                }
-            }else{
-                Logger.Log("Press choose another button"); 
-            }
+    // bool mapping = true;
+    // void MapController()
+    // {
+    //     for (int i = 0; i < 20; i++) {
+    //         if (Input.GetAxis("Z") == 0)            {
+    //             if (Input.GetKeyDown("joystick 1 button " + i)) {
+    //                 hello = i;
+    //                 Logger.Log("Map To => " + i);
+    //             }
+    //         }else{
+    //             Logger.Log("Press choose another button"); 
+    //         }
 
-        }
+    //     }
 
        
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            mapping = false;
-        }
-    }
+    //     if (Input.GetKeyDown(KeyCode.Q))
+    //     {
+    //         mapping = false;
+    //     }
+    // }
 
     bool IsControlledConnected()
     {
