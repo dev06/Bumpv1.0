@@ -18,11 +18,16 @@ public class CustomInputManager : MonoBehaviour
 	void Start()
 	{
 		_controllerIndex = new int[TotalButtons];
-		isMappingController = true; 
+		
 	}
 
 	void Update()
 	{
+		if(Input.GetKeyDown(KeyCode.M))
+		{
+			isMappingController = true; 
+			Logger.Log("Mapping Controller"); 
+		}
 		if (isMappingController)
 		{	
 			MapController(1);
