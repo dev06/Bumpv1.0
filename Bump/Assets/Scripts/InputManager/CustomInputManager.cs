@@ -27,6 +27,11 @@ public class CustomInputManager : MonoBehaviour
 		{	
 			MapController(1);
 		}
+
+		if(Input.GetKeyDown("joystick 1 button " + LIGHT_ATTACK))
+		{
+			Logger.Log("Light attack pressed!"); 
+		}
 	}
 
 	private void MapController(int controllerIndex)

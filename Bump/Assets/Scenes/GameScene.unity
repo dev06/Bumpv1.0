@@ -189,7 +189,7 @@ MonoBehaviour:
   _dampVelocityY: 0
   _dampOrthoSize: 0
   DampSmoothTimePosition: 0
-  DampSmoothTimeZoom: 0.5
+  DampSmoothTimeZoom: 2
   ZoomOffset: 150
 --- !u!1 &443653320
 GameObject:
