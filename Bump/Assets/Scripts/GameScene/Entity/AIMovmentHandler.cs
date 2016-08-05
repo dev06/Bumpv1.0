@@ -25,7 +25,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 	private float _evadeForce                = 400f;
 	private float angle;
 	private float frameCounter;
-	public Color _color; 
+	public Color _color;
 
 
 	//target instances
@@ -33,6 +33,8 @@ public class AIMovmentHandler : EntityMovementHandler {
 	private bool inContactWithTarget;
 
 
+	//DEBUG MEMBERS
+	public static bool TOGGLE;
 
 	void Start () {
 		Init();
@@ -42,7 +44,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 	void InitThis() {
 		if (target == null)
 		{
-		
+
 		}
 		previousPosition = target.transform.position;
 
@@ -53,13 +55,16 @@ public class AIMovmentHandler : EntityMovementHandler {
 		}
 
 		_animator = GetComponent<CustomAnimator>();
-		GetComponent<SpriteRenderer>().color = _color; 
-		
+		GetComponent<SpriteRenderer>().color = _color;
+	
+
 	}
 
 	// Update is called once per framesd
 	void Update () {
-		Move();
+
+
+		Move(TOGGLE);
 		AnimateBotBumper(1);
 
 
@@ -69,12 +74,15 @@ public class AIMovmentHandler : EntityMovementHandler {
 	///summary
 	///Adds force to the entity to the target
 	///summary
-	private void Move()
+	private void Move(bool shouldMove)
 	{
-		UseProjectedTrajectory();
-		UseEvasion();
-		CanBoost();
-		UseBoost();
+		if (shouldMove)
+		{
+			UseProjectedTrajectory();
+			UseEvasion();
+			CanBoost();
+			UseBoost();
+		}
 	}
 
 	private void AddSimpleForce(Vector2 targetVec)

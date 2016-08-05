@@ -40,6 +40,12 @@ public class GameSceneManager : MonoBehaviour {
             frames = 0;
         }
 
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            AIMovmentHandler.TOGGLE = !AIMovmentHandler.TOGGLE;
+        }
+
+
 
         // if (mapping)
         // {
@@ -64,12 +70,12 @@ public class GameSceneManager : MonoBehaviour {
     //                 Logger.Log("Map To => " + i);
     //             }
     //         }else{
-    //             Logger.Log("Press choose another button"); 
+    //             Logger.Log("Press choose another button");
     //         }
 
     //     }
 
-       
+
 
     //     if (Input.GetKeyDown(KeyCode.Q))
     //     {

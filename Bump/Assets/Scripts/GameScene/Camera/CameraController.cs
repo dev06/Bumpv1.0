@@ -80,7 +80,7 @@ public class CameraController : MonoBehaviour {
 
 				if (i < targetTransforms.Count - 1)
 				{
-					float _cameraDistaceIntensity = 1;
+					float _cameraDistaceIntensity = 1.0f;
 					if (targetTransforms[i + 1] != null)
 					{
 						_cameraDistance += Mathf.Pow(GetDistance(targetTransforms[i], targetTransforms[i + 1]), _cameraDistaceIntensity);
@@ -110,10 +110,13 @@ public class CameraController : MonoBehaviour {
 		count = Mathf.SmoothDamp(prevCount, count, ref vel, .01f);
 
 		prevCount = count;
+		_cameraDistance = Mathf.Pow(_cameraDistance, 1.1f); 
 		_cameraDistance /= count;
 
 		_camX /= count;
 		_camY /= count;
+
+
 
 	}
 
