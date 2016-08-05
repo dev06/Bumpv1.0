@@ -135,7 +135,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0.019607844}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -189,7 +189,7 @@ MonoBehaviour:
   _dampVelocityY: 0
   _dampOrthoSize: 0
   DampSmoothTimePosition: 0
-  DampSmoothTimeZoom: 0.5
+  DampSmoothTimeZoom: 2
   ZoomOffset: 150
 --- !u!1 &443653320
 GameObject:
