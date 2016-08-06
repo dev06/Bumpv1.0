@@ -104,6 +104,7 @@ public class GameSceneManager : MonoBehaviour {
         environment.name = "Frozen";
         RectTransform _rTransform = environment.GetComponent<RectTransform>();
         environment.transform.parent = GameCanvas.transform;
+        _rTransform.position = new Vector3(0,0,1); 
         _rTransform.localScale = new Vector3(1, 1, 0);
         _rTransform.offsetMin = new Vector2(0, 0);
         _rTransform.offsetMax = new Vector2(0, 0);

@@ -8,7 +8,7 @@ public class MovementHandler : EntityMovementHandler
 
     private bool isUsingController = false;
     private float _startBoostForce = 2000f;
-    public Color color; 
+    public Color color;
 
     #endregion---/PRIVATE MEMEBERS
 
@@ -25,7 +25,7 @@ public class MovementHandler : EntityMovementHandler
         rg2d = GetComponent<Rigidbody2D>();
         pCol2D = transform.FindChild("BumperCollider").GetComponent<PolygonCollider2D>();
         _animator = GetComponent<CustomAnimator>();
-        GetComponent<SpriteRenderer>().color = color; 
+        GetComponent<SpriteRenderer>().color = color;
 
     }
 
@@ -35,6 +35,11 @@ public class MovementHandler : EntityMovementHandler
         AdjustColliderOffset(_animator.index);
         CanBoost();
         Move();
+
+     
+
+ 
+
 
 
     }
@@ -58,7 +63,7 @@ public class MovementHandler : EntityMovementHandler
                 bool boost;
                 Boost(movement, _startBoostForce, out boost);
                 if (boost) {
-                    AddExternalObject(BoostRing, transform.position, transform.rotation,color);
+                    AddExternalObject(BoostRing, transform.position, transform.rotation, color);
                 }
             }
 
@@ -75,7 +80,7 @@ public class MovementHandler : EntityMovementHandler
                 bool boost;
                 Boost(movement, _startBoostForce, out boost);
                 if (_boosted) {
-                    AddExternalObject(BoostRing, transform.position, transform.rotation,color);
+                    AddExternalObject(BoostRing, transform.position, transform.rotation, color);
                 }
             }
 
