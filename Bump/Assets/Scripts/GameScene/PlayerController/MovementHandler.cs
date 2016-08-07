@@ -26,7 +26,7 @@ public class MovementHandler : EntityMovementHandler
         pCol2D = transform.FindChild("BumperCollider").GetComponent<PolygonCollider2D>();
         _animator = GetComponent<CustomAnimator>();
         GetComponent<SpriteRenderer>().color = color;
-
+        _health = 100.0f; 
     }
 
 
@@ -35,13 +35,6 @@ public class MovementHandler : EntityMovementHandler
         AdjustColliderOffset(_animator.index);
         CanBoost();
         Move();
-
-     
-
- 
-
-
-
     }
 
     /// <summary>
@@ -52,7 +45,8 @@ public class MovementHandler : EntityMovementHandler
         float horizontal = Input.GetAxis((GameSceneManager.isControllerConnected) ? Constants.CONTROLLER_LEFT_STICK_HORIZONTAL : Constants.HORIZONTAL);
         float vertical = Input.GetAxis((GameSceneManager.isControllerConnected) ? Constants.CONTROLLER_LEFT_STICK_VERTICAL : Constants.VERTICAL);
         Vector2 movement = new Vector2(horizontal, vertical);
-        rg2d.AddForce(movement * Velocity);
+
+        rg2d.AddForce((movement * Velocity) / rg2d.mass);
 
         movementDirection = movement;
 
@@ -104,9 +98,19 @@ public class MovementHandler : EntityMovementHandler
     }
 
 
+    public void DoDamage(float damage)
+    {
+        base.DoDamage(damage); 
+    }
+
+
     public bool IsBumperActive {
-
         get { return _animator._bumperActive; }
+    }
 
+
+    public float Health {
+        get { return _health; }
+        set {SetHealth(value); }
     }
 }

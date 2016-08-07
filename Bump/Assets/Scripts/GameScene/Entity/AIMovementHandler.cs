@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AIMovmentHandler : EntityMovementHandler {
+public class AIMovementHandler : EntityMovementHandler {
 
 	// Use this for initialization
 
@@ -10,7 +10,11 @@ public class AIMovmentHandler : EntityMovementHandler {
 
 	private Vector2 previousPosition;
 	private Vector2 force = Vector2.zero;
+	private Vector2 _partrolVec = Vector2.zero;
 
+	private Bumper _bumper;
+
+	private bool hit;
 
 	private float minForceDistance           = 10; //when to stop adding force
 	private float updatePositionEvery        = .5f;
@@ -23,8 +27,12 @@ public class AIMovmentHandler : EntityMovementHandler {
 	private float _velocity                  = 50f;
 	private float _evadeFrequency 			 = .01f;
 	private float _evadeForce                = 400f;
+	private float _changeDirFreq             = .02f;
+	private float _patrolDX;
+	private float _patrolDY;
 	private float angle;
 	private float frameCounter;
+
 	public Color _color;
 
 
@@ -55,20 +63,19 @@ public class AIMovmentHandler : EntityMovementHandler {
 		}
 
 		_animator = GetComponent<CustomAnimator>();
+		_bumper = GetComponentInChildren<Bumper>();
 		GetComponent<SpriteRenderer>().color = _color;
-	
+
+		_health = 110.0f;
+
 
 	}
 
 	// Update is called once per framesd
 	void Update () {
-
-
 		Move(TOGGLE);
 		AnimateBotBumper(1);
-
-
-
+		Manage();
 	}
 
 	///summary
@@ -78,11 +85,17 @@ public class AIMovmentHandler : EntityMovementHandler {
 	{
 		if (shouldMove)
 		{
+
 			UseProjectedTrajectory();
 			UseEvasion();
 			CanBoost();
 			UseBoost();
 		}
+	}
+
+	private void Manage()
+	{
+		if (isDead()) Destroy();
 	}
 
 	private void AddSimpleForce(Vector2 targetVec)
@@ -93,7 +106,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 		FaceFoward(transform, direction);
 
 		if (Vector2.Distance(targetVec, transform.position) > minForceDistance) {
-			rg2d.AddForce(direction.normalized * _velocity);
+			rg2d.AddForce((direction.normalized * _velocity) / rg2d.mass);
 		}
 	}
 
@@ -108,7 +121,6 @@ public class AIMovmentHandler : EntityMovementHandler {
 		float py = currentPosition.y + (dy * Mathf.Pow(distance, generation));
 		Vector2 projectedVector = new Vector2(px, py);
 		previousPosition = currentPosition;
-
 		return projectedVector;
 	}
 
@@ -116,7 +128,7 @@ public class AIMovmentHandler : EntityMovementHandler {
 		frameCounter += Time.deltaTime;
 		if (frameCounter >= updatePositionEvery)
 		{
-			force = GetProjectedVector();
+			force = GetProjectedVector() + Patrol();
 			frameCounter = 0;
 		}
 
@@ -170,7 +182,6 @@ public class AIMovmentHandler : EntityMovementHandler {
 		Vector2 addedForce = new Vector2(Mathf.Sin(angle) * MathUtil.RangeBetweenTwo(-1, 1), Mathf.Cos(angle) * MathUtil.RangeBetweenTwo(-1, 1));
 
 		Vector2 finalForce = (opposingForce * intensity) + addedForce * intensity;
-		//FaceFoward(transform, finalForce);
 		rg2d.AddForce(finalForce.normalized * intensity);
 
 	}
@@ -190,8 +201,6 @@ public class AIMovmentHandler : EntityMovementHandler {
 		if (WithinRange(transform.position, target.transform.position, minForceDistance * 2.0f) && Random.Range(0.0f, 1.0f) <= attackFrequency)
 		{
 			_animator.AnimateBumper(rate);
-
-
 		} else
 		{
 			_animator.ResetIndex();
@@ -229,4 +238,57 @@ public class AIMovmentHandler : EntityMovementHandler {
 		}
 	}
 
+
+
+	private Vector2 Patrol()
+	{
+		float differenceOffset = 50;
+		float currentVelocity = Mathf.Sqrt(rg2d.velocity.magnitude);
+		float lowerBound = currentVelocity - (differenceOffset * 2.0f);
+		float upperBound = currentVelocity + (differenceOffset * 0.03f);
+		float resultValue = Random.Range(lowerBound, upperBound);
+		bool changedDir = false;
+
+		if (resultValue > currentVelocity)
+		{
+			ChangeDirection(false);
+		}
+
+		//rg2d.AddForce((_partrolVec * _velocity) / rg2d.mass);
+		return _partrolVec;
+
+	}
+
+	void OnCollisionEnter2D(Collision2D col)
+	{
+		ChangeDirection(true);
+	}
+
+	private void ChangeDirection(bool opposite)
+	{
+		_patrolDX = (!opposite) ? Random.Range(-1.0f, 1.0f) : _patrolDX * -Random.Range(0.0f, 1.0f);
+		_patrolDY = (!opposite) ? Random.Range(-1.0f, 1.0f) : _patrolDY * -Random.Range(0.0f, 1.0f);
+		_partrolVec.x = _patrolDX;
+		_partrolVec.y = _patrolDY;
+	}
+
+	private bool isDead()
+	{
+		return Health <= 0;
+	}
+
+	private void Destroy()
+	{
+		Destroy(gameObject);
+	}
+
+	public void DoDamage(float damage)
+	{
+		base.DoDamage(damage);
+	}
+
+	public float Health {
+		get { return _health;}
+		set { SetHealth(value);}
+	}
 }

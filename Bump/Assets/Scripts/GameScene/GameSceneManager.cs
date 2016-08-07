@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 public class GameSceneManager : MonoBehaviour {
 
+    
+    public static int GAME_TIME = 0; 
+
 
     public static bool isControllerConnected;
     public Text fpsText;
@@ -28,6 +31,7 @@ public class GameSceneManager : MonoBehaviour {
     void Update () {
 
         //TODO temp
+        GAME_TIME = (int)Time.realtimeSinceStartup; 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
@@ -42,10 +46,11 @@ public class GameSceneManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            AIMovmentHandler.TOGGLE = !AIMovmentHandler.TOGGLE;
+            AIMovementHandler.TOGGLE = !AIMovementHandler.TOGGLE;
         }
+    
 
-
+      
 
         // if (mapping)
         // {

@@ -9,6 +9,8 @@ public class EntityMovementHandler : MonoBehaviour {
 	protected CustomAnimator _animator;
 	protected float _boostCoolDown         = 1f;
 	protected float _boostCounter          = 0.0f;
+	protected float _health;
+	protected float MaxHealth;
 
 
 	void Start () {
@@ -56,7 +58,7 @@ public class EntityMovementHandler : MonoBehaviour {
 		{
 			Vector2 force = movement * boost;
 			rg2d.AddForce(force);
-			Logger.Log("Force Added"); 
+			Logger.Log("Force Added");
 			_boosted = true;
 		}
 	}
@@ -77,7 +79,7 @@ public class EntityMovementHandler : MonoBehaviour {
 	protected void AddExternalObject(GameObject obj, Vector3 position, Quaternion rotation, Color color)
 	{
 		GameObject ring = Instantiate(obj, position, rotation) as GameObject;
-		if(ring.GetComponent<SpriteRenderer>() !=null) ring.GetComponent<SpriteRenderer>().color = color; 
+		if (ring.GetComponent<SpriteRenderer>() != null) ring.GetComponent<SpriteRenderer>().color = color;
 	}
 
 	protected void AnimateBumper(int rate) {
@@ -105,7 +107,25 @@ public class EntityMovementHandler : MonoBehaviour {
 
 	protected bool WithinRange(Vector2 firstPoint, Vector2 secondPoint, float distance)
 	{
-		return Vector2.Distance(firstPoint, secondPoint) < distance; 
+		return Vector2.Distance(firstPoint, secondPoint) < distance;
+	}
+
+	protected float GetDistance(Vector3 from, Vector3 to)
+	{
+		return Vector3.Distance(from, to);
+	}
+
+	protected void DoDamage(float damage)
+	{
+		if (_health > 0)
+		{
+			_health -= damage;
+		}
+	}
+
+	protected void SetHealth(float _health)
+	{
+		this._health = _health; 
 	}
 
 

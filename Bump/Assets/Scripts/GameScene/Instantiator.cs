@@ -37,8 +37,8 @@ public class Instantiator : MonoBehaviour {
 			float x = Random.Range((-GameCanvas.GetComponent<RectTransform>().rect.width/2) + offset, (GameCanvas.GetComponent<RectTransform>().rect.width/2) - offset);
 			float y = Random.Range((-GameCanvas.GetComponent<RectTransform>().rect.height/2) + offset, (GameCanvas.GetComponent<RectTransform>().rect.height/2) - offset);
 			GameObject AI_Clone = Instantiate(AI, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
-			AI_Clone.GetComponent<AIMovmentHandler>().target = GameObject.Find("Player"); 
-			AI_Clone.GetComponent<AIMovmentHandler>()._color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f),Random.Range(0.0f, 1.0f)); 
+			AI_Clone.GetComponent<AIMovementHandler>().target = GameObject.Find("Player"); 
+			AI_Clone.GetComponent<AIMovementHandler>()._color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f),Random.Range(0.0f, 1.0f)); 
 			_cameraController.targetTransforms.Add(AI_Clone.transform); 
 		}
 	}	

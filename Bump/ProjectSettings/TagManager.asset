@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Canvas/GameCanvas
   - Entity/GameEntity
+  - Canvas/UICanvas
   layers:
   - Default
   - TransparentFX

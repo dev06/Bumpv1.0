@@ -15,6 +15,7 @@ public class Constants {
 
 
     public const float BUMPER_IMPULSE_MAG = 22f;
+    public const float BUMPER_DAMAGE_BASE = 10.0F; 
     public const float BASE_BUMPER_IMPLUSE = 200.0F;  
 
 }
