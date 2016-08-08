@@ -4,8 +4,14 @@ using System.Collections;
 public class CameraController : MonoBehaviour {
 
 	public List<Transform> targetTransforms;
+	public float ZoomOffset                                                                        = 1.0f;
+	public float MAXZoom                                                                           = 250.0f;
+	public float SmoothPosition                                                                    = 1.0f; // TIME IT TAKES TO DAMP TO NEXT POSITION
+	public float SmoothZoom                                                                        = .25f;     // TIME IT TAKES TO DAMP TO NEXT ZOOM
+	public float PositionResetAmount;
+	public float ZoomResetAmount;
 
-
+	
 	private Camera _camera;
 	private float _cameraPositionX;
 	private float _cameraPositionY;
@@ -22,12 +28,6 @@ public class CameraController : MonoBehaviour {
 	private float vel;
 	private float count;
 	private float prevCount;
-	public float ZoomOffset                                                                        = 1.0f;
-	public float MAXZoom                                                                           = 250.0f;
-	public float SmoothPosition                                                                    = 1.0f; // TIME IT TAKES TO DAMP TO NEXT POSITION
-	public float SmoothZoom                                                                        = .25f;     // TIME IT TAKES TO DAMP TO NEXT ZOOM
-	public float PositionResetAmount;
-	public float ZoomResetAmount;
 
 	void Start () {
 		_camera = GetComponent<Camera>();
@@ -35,6 +35,8 @@ public class CameraController : MonoBehaviour {
 
 	void Update ()
 	{
+	
+	
 		if (targetTransforms.Count > 0)
 		{
 			float _camX;
@@ -43,13 +45,12 @@ public class CameraController : MonoBehaviour {
 			float _avgVelocity;
 
 			GetAverageCameraPositionAndCameraDistance(out _camX, out _camY, out _cameraDistance, out _avgVelocity);
-			
+
 			DampSmoothTimePosition = (DampSmoothTimePosition > 0) ? DampSmoothTimePosition - (Time.deltaTime / SmoothPosition) : 0;
 			float _dampY = Mathf.SmoothDamp(transform.position.y, _camY, ref _dampVelocityY, DampSmoothTimePosition);
 			float _dampX = Mathf.SmoothDamp(transform.position.x, _camX, ref _dampVelocityX, DampSmoothTimePosition);
 			float _dampOrtho = Mathf.SmoothDamp(_camera.orthographicSize, (_cameraDistance) + ZoomOffset, ref _dampOrthoSize, DampSmoothTimeZoom);
 			DampSmoothTimeZoom = Mathf.SmoothDamp(DampSmoothTimeZoom, 0, ref targetDamp, 1.0f / SmoothZoom);
-			
 
 			transform.position = new Vector3(_dampX, _dampY, -1);
 			_camera.orthographicSize = (_dampOrtho > MAXZoom) ? MAXZoom : _dampOrtho;
@@ -76,8 +77,6 @@ public class CameraController : MonoBehaviour {
 
 				_camX += targetTransforms[i].position.x;
 				_camY += targetTransforms[i].position.y;
-
-				// CALCULATE THE DISTANCE BETWEEN CAMERA AND TRANSFROM
 
 				if (targetTransforms.Count > 1)
 				{

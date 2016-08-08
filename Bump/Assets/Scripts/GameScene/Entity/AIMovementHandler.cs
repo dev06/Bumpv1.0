@@ -5,17 +5,16 @@ public class AIMovementHandler : EntityMovementHandler {
 
 	// Use this for initialization
 
+	#region--PUBLIC VARS--
 	public GameObject Ring;
 	public GameObject target;
-
+	#endregion--/PUBLIC VARS--
+	
+	private Bumper _bumper;
 	private Vector2 previousPosition;
 	private Vector2 force = Vector2.zero;
 	private Vector2 _partrolVec = Vector2.zero;
-
-	private Bumper _bumper;
-
 	private bool hit;
-
 	private float minForceDistance           = 10; //when to stop adding force
 	private float updatePositionEvery        = .5f;
 	private float attackFrequency            = .8f;  //0.0f (0%) - 1.0f (100%)
@@ -32,8 +31,6 @@ public class AIMovementHandler : EntityMovementHandler {
 	private float _patrolDY;
 	private float angle;
 	private float frameCounter;
-
-	//public Color color;
 
 
 	//target instances
@@ -106,7 +103,7 @@ public class AIMovementHandler : EntityMovementHandler {
 	private void ChooseNextTarget()
 	{
 		Transform newTarget = GameSceneManager.Players[Random.Range(0, GameSceneManager.Players.Count)].gameObject.transform;
-		if(newTarget == transform)
+		if (newTarget == transform)
 		{
 			newTarget = GameSceneManager.Players[Random.Range(0, GameSceneManager.Players.Count)].gameObject.transform;
 		}
