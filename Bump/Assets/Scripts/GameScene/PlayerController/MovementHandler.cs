@@ -40,8 +40,8 @@ public class MovementHandler : EntityMovementHandler
     /// </summary>
     void Move()
     {
-        float horizontal = Input.GetAxis((GameSceneManager.isControllerConnected) ? Constants.CONTROLLER_LEFT_STICK_HORIZONTAL : Constants.HORIZONTAL);
-        float vertical = Input.GetAxis((GameSceneManager.isControllerConnected) ? Constants.CONTROLLER_LEFT_STICK_VERTICAL : Constants.VERTICAL);
+        float horizontal = Input.GetAxis((GameSceneManager.isControllerConnected) ? Constants.CONTROLLER_LEFT_STICK_HORIZONTAL : Constants.HORIZONTAL) * Time.deltaTime;
+        float vertical = Input.GetAxis((GameSceneManager.isControllerConnected) ? Constants.CONTROLLER_LEFT_STICK_VERTICAL : Constants.VERTICAL) * Time.deltaTime;
         Vector2 movement = new Vector2(horizontal, vertical);
 
         rg2d.AddForce((movement * Velocity) / rg2d.mass);
