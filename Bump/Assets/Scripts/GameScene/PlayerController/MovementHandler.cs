@@ -21,9 +21,9 @@ public class MovementHandler : EntityMovementHandler
 
 
     void Start()
-    {   
-        base.Init(); 
-        Health = 100; 
+    {
+        base.Init();
+        Health = 100;
         GetComponent<SpriteRenderer>().color = color;
     }
 
@@ -43,8 +43,7 @@ public class MovementHandler : EntityMovementHandler
         float horizontal = Input.GetAxis((GameSceneManager.isControllerConnected) ? Constants.CONTROLLER_LEFT_STICK_HORIZONTAL : Constants.HORIZONTAL) * Time.deltaTime;
         float vertical = Input.GetAxis((GameSceneManager.isControllerConnected) ? Constants.CONTROLLER_LEFT_STICK_VERTICAL : Constants.VERTICAL) * Time.deltaTime;
         Vector2 movement = new Vector2(horizontal, vertical);
-
-        rg2d.AddForce((movement * Velocity) / rg2d.mass);
+        rg2d.AddForce((movement * (Velocity * Velocity) / rg2d.mass));
 
         movementDirection = movement;
 
@@ -83,23 +82,28 @@ public class MovementHandler : EntityMovementHandler
             }
         }
 
-        if (isMoving(false, movement)) {
-            if (_animator._triggerHit) {
-                AnimateBumper(50.0f * Time.fixedDeltaTime);
-                Logger.Log(50.0f * Time.fixedDeltaTime); 
-            }
-        } else {
-            _animator.ResetIndex();
-        }
 
         //AnimateBumper(1);
         FaceFoward(transform, movement);
     }
 
+    void FixedUpdate()
+    {
+        if (isMoving(false, movementDirection)) {
+            if (_animator._triggerHit) {
+                AnimateBumper(50.0f * Time.fixedDeltaTime);
+                Logger.Log(50.0f * Time.fixedDeltaTime);
+            }
+        } else {
+            _animator.ResetIndex();
+        }
+
+    }
+
 
     public void DoDamage(float damage)
     {
-        base.DoDamage(damage); 
+        base.DoDamage(damage);
 
     }
 
