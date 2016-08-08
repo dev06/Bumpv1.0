@@ -16,7 +16,7 @@ public class AIMovementHandler : EntityMovementHandler {
 
 	private bool hit;
 
-	private float minForceDistance           = 10; //when to stop adding force
+	private float minForceDistance           =  10; //when to stop adding force
 	private float updatePositionEvery        = .5f;
 	private float attackFrequency            = .8f;  //0.0f (0%) - 1.0f (100%)
 	private float _boostForce 				 = 1000f;
@@ -24,7 +24,7 @@ public class AIMovementHandler : EntityMovementHandler {
 	private float _startBoostSpeed           = 20.0f;
 	private float _straightDistanceOffset    = 30f;
 	private float _angle                     = 10f;
-	private float _velocity                  = 50f;
+	private float _velocity                  = 65f;
 	private float _evadeFrequency 			 = .01f;
 	private float _evadeForce                = 400f;
 	private float _changeDirFreq             = .02f;
@@ -50,25 +50,15 @@ public class AIMovementHandler : EntityMovementHandler {
 	}
 
 	void InitThis() {
-		if (target == null)
-		{
-
-		}
 		previousPosition = target.transform.position;
-
 		if (target.GetComponent<MovementHandler>() != null)
 		{
 			targetMovementHandler = target.GetComponent<MovementHandler>();
-
 		}
-
 		_animator = GetComponent<CustomAnimator>();
 		_bumper = GetComponentInChildren<Bumper>();
 		GetComponent<SpriteRenderer>().color = color;
-
-		Health = 1.0f;
-
-
+		Health = 100.0f;
 	}
 
 	// Update is called once per framesd
@@ -120,7 +110,7 @@ public class AIMovementHandler : EntityMovementHandler {
 		FaceFoward(transform, direction);
 
 		if (Vector2.Distance(targetVec, transform.position) > minForceDistance) {
-			rg2d.AddForce((direction.normalized * _velocity) / rg2d.mass);
+			rg2d.AddForce(((direction.normalized * Time.deltaTime) * (_velocity * _velocity) / rg2d.mass));
 		}
 	}
 
@@ -163,10 +153,8 @@ public class AIMovementHandler : EntityMovementHandler {
 	private void UseEvasion() {
 		bool withinRange = Vector2.Distance(target.transform.position, transform.position) < minForceDistance * 3.0f;
 
-
 		if (withinRange)
 		{
-
 			if (targetMovementHandler != null)
 			{
 
