@@ -36,13 +36,10 @@ public class Bumper : MonoBehaviour {
                 float _thisImpulse = (Constants.BUMPER_IMPULSE_MAG * Mathf.Sqrt(GetComponentInParent<Rigidbody2D>().velocity.SqrMagnitude())) + Constants.BASE_BUMPER_IMPLUSE;
 
                 float _thisVel = GetComponentInParent<Rigidbody2D>().velocity.magnitude;
+
                 float _otherVel = col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude;
 
                 float _velDifference = Mathf.Abs(_thisVel - _otherVel);
-
-
-                col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction.normalized * _thisImpulse);
-
 
                 float entityDamage = (_velDifference / 100.0f) * Constants.BUMPER_DAMAGE_BASE;
 
@@ -52,16 +49,19 @@ public class Bumper : MonoBehaviour {
                     MovementHandler _movementHandler = (MovementHandler)col.gameObject.GetComponent<EntityMovementHandler>();
 
                     _movementHandler.DoDamage(entityDamage);
-                    Logger.Log("PLAYER HEALTH => " + _movementHandler.Health);
+                    //Logger.Log("PLAYER HEALTH => " + _movementHandler.Health);
 
 
                 } else if (col.gameObject.GetComponent<EntityMovementHandler>().GetType() == typeof(AIMovementHandler))
                 {
                     AIMovementHandler _aiMovementHandler = (AIMovementHandler)col.gameObject.GetComponent<EntityMovementHandler>();
                     _aiMovementHandler.DoDamage(entityDamage);
-                    Logger.Log("BOT HEALTH => " + _aiMovementHandler.Health);
+                   // Logger.Log("BOT HEALTH => " + _aiMovementHandler.Health);
                 }
-               _hit = true;
+
+                col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction.normalized * _thisImpulse);
+
+                _hit = true;
             }
         }
     }

@@ -33,7 +33,7 @@ public class AIMovementHandler : EntityMovementHandler {
 	private float angle;
 	private float frameCounter;
 
-	public Color _color;
+	//public Color color;
 
 
 	//target instances
@@ -64,17 +64,15 @@ public class AIMovementHandler : EntityMovementHandler {
 
 		_animator = GetComponent<CustomAnimator>();
 		_bumper = GetComponentInChildren<Bumper>();
-		GetComponent<SpriteRenderer>().color = _color;
+		GetComponent<SpriteRenderer>().color = color;
 
-		_health = 110.0f;
+		Health = 1.0f;
 
 
 	}
 
 	// Update is called once per framesd
 	void Update () {
-		Move(TOGGLE);
-		AnimateBotBumper(1);
 		Manage();
 	}
 
@@ -85,7 +83,6 @@ public class AIMovementHandler : EntityMovementHandler {
 	{
 		if (shouldMove)
 		{
-
 			UseProjectedTrajectory();
 			UseEvasion();
 			CanBoost();
@@ -95,7 +92,24 @@ public class AIMovementHandler : EntityMovementHandler {
 
 	private void Manage()
 	{
-		if (isDead()) Destroy();
+		if (target != null)
+		{
+			if (isDead()) Destroy();
+			Move(TOGGLE);
+			AnimateBotBumper(1);
+		} else
+		{
+			ChooseNextTarget();
+		}
+	}
+
+	private void ChooseNextTarget()
+	{
+		Transform newTarget = GameSceneManager.Players[Random.Range(0, GameSceneManager.Players.Count)].gameObject.transform;
+		if(newTarget == transform)
+		{
+			newTarget = GameSceneManager.Players[Random.Range(0, GameSceneManager.Players.Count)].gameObject.transform;
+		}
 	}
 
 	private void AddSimpleForce(Vector2 targetVec)
@@ -218,7 +232,7 @@ public class AIMovementHandler : EntityMovementHandler {
 				Boost(force.normalized, _boostForce, out boosted);
 				if (boosted)
 				{
-					AddExternalObject(Ring, transform.position, transform.rotation, _color);
+					AddExternalObject(Ring, transform.position, transform.rotation, color);
 				}
 			}
 		}
@@ -279,12 +293,13 @@ public class AIMovementHandler : EntityMovementHandler {
 
 	private void Destroy()
 	{
-		Destroy(gameObject);
+		//Destroy(gameObject);
 	}
 
 	public void DoDamage(float damage)
 	{
 		base.DoDamage(damage);
+
 	}
 
 	public float Health {

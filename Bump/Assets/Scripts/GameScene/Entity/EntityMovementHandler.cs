@@ -11,6 +11,7 @@ public class EntityMovementHandler : MonoBehaviour {
 	protected float _boostCounter          = 0.0f;
 	protected float _health;
 	protected float MaxHealth;
+	protected Color color; 
 
 
 	void Start () {
@@ -22,7 +23,7 @@ public class EntityMovementHandler : MonoBehaviour {
 			rg2d = GetComponent<Rigidbody2D>();
 			pCol2D = transform.FindChild("BumperCollider").GetComponent<PolygonCollider2D>();
 			_animator = GetComponent<CustomAnimator>();
-
+	
 		} catch (Exception e) {
 			Debug.LogError("One of the component is not found : Source EntityMovementHandler ");
 		}
@@ -30,7 +31,6 @@ public class EntityMovementHandler : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
 	}
 
 	protected void Move() {
@@ -121,11 +121,30 @@ public class EntityMovementHandler : MonoBehaviour {
 		{
 			_health -= damage;
 		}
+
+		if (_health < 0)
+		{
+			Destroy(gameObject);
+			GameSceneManager.TOTAL_PLAYERS--; 
+			GameSceneManager.Players.Remove(this); 
+		}
 	}
 
 	protected void SetHealth(float _health)
 	{
-		this._health = _health; 
+		this._health = _health;
+	}
+
+
+	public float Health {
+
+		get {return _health;}
+		set {SetHealth(value); }
+	}
+
+	public Color Color{
+		get {return color; }
+		set {color = value;}
 	}
 
 

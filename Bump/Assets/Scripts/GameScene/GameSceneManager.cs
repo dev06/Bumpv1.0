@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic; 
 using UnityEngine.UI;
 public class GameSceneManager : MonoBehaviour {
 
     
     public static int GAME_TIME = 0; 
-
+    public static int TOTAL_PLAYERS = 0; 
+    public static List<EntityMovementHandler> Players = new List<EntityMovementHandler>(); 
 
     public static bool isControllerConnected;
     public Text fpsText;
@@ -29,7 +31,7 @@ public class GameSceneManager : MonoBehaviour {
 
 
     void Update () {
-
+      
         //TODO temp
         GAME_TIME = (int)Time.realtimeSinceStartup; 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -50,7 +52,7 @@ public class GameSceneManager : MonoBehaviour {
         }
     
 
-      
+     
 
         // if (mapping)
         // {

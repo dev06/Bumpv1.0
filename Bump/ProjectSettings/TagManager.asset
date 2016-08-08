@@ -7,6 +7,10 @@ TagManager:
   - Canvas/GameCanvas
   - Entity/GameEntity
   - Canvas/UICanvas
+  - Icon/EntityIcon
+  - Icon/EntityIcon/InnerIcon
+  - Icon/EntityIcon/Fill
+  - Icon/EntityIcon/Text
   layers:
   - Default
   - TransparentFX

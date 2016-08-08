@@ -8,7 +8,7 @@ public class MovementHandler : EntityMovementHandler
 
     private bool isUsingController = false;
     private float _startBoostForce = 2000f;
-    public Color color;
+    //public Color color;
 
     #endregion---/PRIVATE MEMEBERS
 
@@ -21,12 +21,10 @@ public class MovementHandler : EntityMovementHandler
 
 
     void Start()
-    {
-        rg2d = GetComponent<Rigidbody2D>();
-        pCol2D = transform.FindChild("BumperCollider").GetComponent<PolygonCollider2D>();
-        _animator = GetComponent<CustomAnimator>();
+    {   
+        base.Init(); 
+        Health = 100; 
         GetComponent<SpriteRenderer>().color = color;
-        _health = 100.0f; 
     }
 
 
@@ -101,6 +99,7 @@ public class MovementHandler : EntityMovementHandler
     public void DoDamage(float damage)
     {
         base.DoDamage(damage); 
+
     }
 
 
