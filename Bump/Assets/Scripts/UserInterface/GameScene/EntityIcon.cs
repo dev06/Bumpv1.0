@@ -62,6 +62,10 @@ public class EntityIcon : MonoBehaviour {
 		if (Target == null)
 		{
 			_expand = false;
+			if(_rTransform.localScale.x < 0.01f)
+			{
+				Destroy(gameObject); 
+			}
 		}
 	}
 }

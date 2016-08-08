@@ -82,7 +82,6 @@ public class MovementHandler : EntityMovementHandler
             }
         }
 
-
         //AnimateBumper(1);
         FaceFoward(transform, movement);
     }
@@ -92,7 +91,6 @@ public class MovementHandler : EntityMovementHandler
         if (isMoving(false, movementDirection)) {
             if (_animator._triggerHit) {
                 AnimateBumper(50.0f * Time.fixedDeltaTime);
-                Logger.Log(50.0f * Time.fixedDeltaTime);
             }
         } else {
             _animator.ResetIndex();
