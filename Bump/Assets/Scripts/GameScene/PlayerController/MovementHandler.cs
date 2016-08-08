@@ -85,7 +85,8 @@ public class MovementHandler : EntityMovementHandler
 
         if (isMoving(false, movement)) {
             if (_animator._triggerHit) {
-                AnimateBumper(1);
+                AnimateBumper(50.0f * Time.fixedDeltaTime);
+                Logger.Log(50.0f * Time.fixedDeltaTime); 
             }
         } else {
             _animator.ResetIndex();

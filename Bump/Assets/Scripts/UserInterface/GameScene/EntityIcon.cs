@@ -15,6 +15,7 @@ public class EntityIcon : MonoBehaviour {
 	private float fillVel;
 	private float _destroyVel;
 	private Color _color;
+	private bool _expand;
 
 	void Start ()
 	{
@@ -29,23 +30,38 @@ public class EntityIcon : MonoBehaviour {
 		_fill.color = Target.Color;
 		_innerImage.color =  new Color(Target.Color.r, Target.Color.g, Target.Color.b, .5f);
 		_rTransform = GetComponent<RectTransform>();
+		_expand = true;
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
-		_rTransform.localScale = Vector3.Lerp(_rTransform.localScale, new Vector3(.547f, .547f, .547f), Time.deltaTime * 5.0f);
 		_fill.fillAmount = Mathf.SmoothDamp(_fill.fillAmount, Target.Health / 100.0f, ref fillVel, .5f);
 		_text.text = "" + ((int)(_fill.fillAmount * SCALE));
-
-
-		Logger.Log(_rTransform.localScale); 
+		
+		AnimatePopUp(_expand);
+		DestroyThis(); 
 	}
+
+	void AnimatePopUp(bool _expand)
+	{
+		if (_expand)
+		{
+			_rTransform.localScale = Vector3.Lerp(_rTransform.localScale, new Vector3(.547f, .547f, .547f), Time.deltaTime * 5.0f);
+		}
+		else
+		{
+			_rTransform.localScale = Vector3.Lerp(_rTransform.localScale, Vector3.zero, Time.deltaTime * 5.0f);
+		}
+	}
+
 
 
 	void DestroyThis()
 	{
-
-
+		if (Target == null)
+		{
+			_expand = false;
+		}
 	}
 }

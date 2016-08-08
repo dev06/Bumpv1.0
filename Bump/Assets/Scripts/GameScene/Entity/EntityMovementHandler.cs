@@ -82,7 +82,7 @@ public class EntityMovementHandler : MonoBehaviour {
 		if (ring.GetComponent<SpriteRenderer>() != null) ring.GetComponent<SpriteRenderer>().color = color;
 	}
 
-	protected void AnimateBumper(int rate) {
+	protected void AnimateBumper(float rate) {
 		_animator.AnimateBumper(rate);
 	}
 
