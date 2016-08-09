@@ -33,6 +33,12 @@ public class MovementHandler : EntityMovementHandler
         AdjustColliderOffset(_animator.index);
         CanBoost();
         Move();
+
+        //Debug
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            Health = 100; 
+        }
     }
 
     /// <summary>

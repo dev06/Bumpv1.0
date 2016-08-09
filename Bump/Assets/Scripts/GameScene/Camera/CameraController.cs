@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
 public class CameraController : MonoBehaviour {
 
 	public List<Transform> targetTransforms;
@@ -11,7 +12,7 @@ public class CameraController : MonoBehaviour {
 	public float PositionResetAmount;
 	public float ZoomResetAmount;
 
-	
+
 	private Camera _camera;
 	private float _cameraPositionX;
 	private float _cameraPositionY;
@@ -29,14 +30,15 @@ public class CameraController : MonoBehaviour {
 	private float count;
 	private float prevCount;
 
+	private bool shouldMoveCamera;
+
 	void Start () {
 		_camera = GetComponent<Camera>();
 	}
 
 	void Update ()
 	{
-	
-	
+
 		if (targetTransforms.Count > 0)
 		{
 			float _camX;
@@ -51,7 +53,6 @@ public class CameraController : MonoBehaviour {
 			float _dampX = Mathf.SmoothDamp(transform.position.x, _camX, ref _dampVelocityX, DampSmoothTimePosition);
 			float _dampOrtho = Mathf.SmoothDamp(_camera.orthographicSize, (_cameraDistance) + ZoomOffset, ref _dampOrthoSize, DampSmoothTimeZoom);
 			DampSmoothTimeZoom = Mathf.SmoothDamp(DampSmoothTimeZoom, 0, ref targetDamp, 1.0f / SmoothZoom);
-
 			transform.position = new Vector3(_dampX, _dampY, -1);
 			_camera.orthographicSize = (_dampOrtho > MAXZoom) ? MAXZoom : _dampOrtho;
 		}
@@ -78,9 +79,24 @@ public class CameraController : MonoBehaviour {
 				_camX += targetTransforms[i].position.x;
 				_camY += targetTransforms[i].position.y;
 
-				if (targetTransforms.Count > 1)
+				if (i < targetTransforms.Count - 1)
 				{
-					_cameraDistance += GetDistance(transform, targetTransforms[i]);
+					Transform current = targetTransforms[i];
+					if (targetTransforms[i + 1] != null)
+					{
+						Transform next = targetTransforms[i + 1];
+						_cameraDistance += GetDistance(current, next);
+					} else
+					{
+						for (int ii = 0; ii < targetTransforms.Count; ii++)
+						{
+							if (targetTransforms[ii] != null)
+							{
+								_cameraDistance += GetDistance(current, targetTransforms[ii]);
+							}
+						}
+					}
+
 				}
 
 			} else
