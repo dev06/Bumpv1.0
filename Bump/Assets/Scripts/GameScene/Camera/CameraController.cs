@@ -31,7 +31,6 @@ public class CameraController : MonoBehaviour {
 	private float prevCount;
 
 	private bool shouldMoveCamera;
-
 	void Start () {
 		_camera = GetComponent<Camera>();
 	}
@@ -47,6 +46,7 @@ public class CameraController : MonoBehaviour {
 			float _avgVelocity;
 
 			GetAverageCameraPositionAndCameraDistance(out _camX, out _camY, out _cameraDistance, out _avgVelocity);
+			Logger.Log(GetDistance(transform, GameObject.Find("LeftBound").transform)); 
 
 			DampSmoothTimePosition = (DampSmoothTimePosition > 0) ? DampSmoothTimePosition - (Time.deltaTime / SmoothPosition) : 0;
 			float _dampY = Mathf.SmoothDamp(transform.position.y, _camY, ref _dampVelocityY, DampSmoothTimePosition);

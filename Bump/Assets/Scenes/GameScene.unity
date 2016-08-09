@@ -146,7 +146,7 @@ Camera:
   far clip plane: 500
   field of view: 60
   orthographic: 1
-  orthographic size: 135
+  orthographic size: 42.9
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -167,12 +167,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 213795373}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -360}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 180.8, z: -5.0020304}
+  m_LocalScale: {x: 1.000406, y: 1.000406, z: 1.000406}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_Father: {fileID: 1003911200}
+  m_RootOrder: 1
 --- !u!114 &213795379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,11 +186,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransforms: []
   ZoomOffset: 150
-  MAXZoom: 275
+  MAXZoom: 225
   SmoothPosition: 1
   SmoothZoom: 0.5
   PositionResetAmount: 0.5
-  ZoomResetAmount: 0.5
+  ZoomResetAmount: 1
 --- !u!1 &345790455
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +320,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!1 &544257758
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,13 +500,14 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1736983980}
+  - {fileID: 213795378}
   - {fileID: 1756506772}
   m_Father: {fileID: 1569367702}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 450.1827}
+  m_SizeDelta: {x: 800, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1569367701
 GameObject:
@@ -538,7 +539,7 @@ Transform:
   - {fileID: 1003911200}
   - {fileID: 544257759}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!114 &1569367703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,7 +589,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22453994, guid: bd3baba1049e3dd4fbad954719741aa5, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 22453994, guid: bd3baba1049e3dd4fbad954719741aa5, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -679,7 +680,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!114 &1690654105
 MonoBehaviour:
   m_ObjectHideFlags: 0
