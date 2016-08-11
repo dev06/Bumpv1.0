@@ -9,13 +9,18 @@ public class AIMovementHandler : EntityMovementHandler {
 	public GameObject Ring;
 	public GameObject target;
 	#endregion--/PUBLIC VARS--
-	
+
 	private Bumper _bumper;
 	private Vector2 previousPosition;
 	private Vector2 force = Vector2.zero;
 	private Vector2 _partrolVec = Vector2.zero;
 	private bool hit;
 	private float minForceDistance           = 10; //when to stop adding force
+<<<<<<< HEAD
+=======
+	public float _velocity                  = 65f;
+
+>>>>>>> 7a9338b50ce1ea3bf7d19cc7f36ced345cfd89a1
 	private float updatePositionEvery        = .5f;
 	private float attackFrequency            = .8f;  //0.0f (0%) - 1.0f (100%)
 	private float _boostForce 				 = 1000f;
@@ -23,7 +28,6 @@ public class AIMovementHandler : EntityMovementHandler {
 	private float _startBoostSpeed           = 20.0f;
 	private float _straightDistanceOffset    = 30f;
 	private float _angle                     = 10f;
-	private float _velocity                  = 65f;
 	private float _evadeFrequency 			 = .01f;
 	private float _evadeForce                = 400f;
 	private float _changeDirFreq             = .02f;
@@ -39,7 +43,7 @@ public class AIMovementHandler : EntityMovementHandler {
 
 
 	//DEBUG MEMBERS
-	public static bool TOGGLE;
+	public static bool TOGGLE = true;
 
 	void Start () {
 		Init();
@@ -55,7 +59,7 @@ public class AIMovementHandler : EntityMovementHandler {
 		_animator = GetComponent<CustomAnimator>();
 		_bumper = GetComponentInChildren<Bumper>();
 		GetComponent<SpriteRenderer>().color = color;
-		Health = 100.0f;
+		Health = 100.1f;
 	}
 
 	// Update is called once per framesd
@@ -81,9 +85,10 @@ public class AIMovementHandler : EntityMovementHandler {
 	{
 		if (target != null)
 		{
-			if (isDead()) Destroy();
+			if (isDead()) { Destroy(); }
 			Move(TOGGLE);
 			AnimateBotBumper(1);
+			CalculateForce(Time.deltaTime);
 		} else
 		{
 			ChooseNextTarget();

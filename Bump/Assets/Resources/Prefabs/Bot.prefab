@@ -160,7 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Ring: {fileID: 116578, guid: da16c297c278fc44a86055b8fd62d8dd, type: 2}
   target: {fileID: 149802, guid: d55ee731a42012c42b84d6734658996f, type: 2}
-  _color: {r: 0, g: 0, b: 0, a: 0}
+  _velocity: 50
 --- !u!114 &11490852
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -172,10 +172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ea9b8a3deffaf4bac437bf26beb8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0, g: 0, b: 0, a: 0}
-  BoostRing: {fileID: 0}
-  movementDirection: {x: 0, y: 0}
-  Velocity: 0
 --- !u!212 &21255090
 SpriteRenderer:
   m_ObjectHideFlags: 1

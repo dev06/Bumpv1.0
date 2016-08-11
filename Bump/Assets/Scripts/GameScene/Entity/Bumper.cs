@@ -5,14 +5,17 @@ public class Bumper : MonoBehaviour {
 
     // Use this for initialization
     private bool _hit;
+    private Rigidbody2D rg2d;
     private GameObject _collidingObject;
     private CustomAnimator _animator;
 
 
 
     void Start () {
+
         try {
             _animator = GetComponentInParent<CustomAnimator>();
+            rg2d = GetComponentInParent<Rigidbody2D>();
         } catch (Exception e) {
             Debug.Log("Components could not be found");
         }
@@ -30,39 +33,60 @@ public class Bumper : MonoBehaviour {
     {
         if (col.gameObject.GetComponent<Rigidbody2D>() != null)
         {
-            if (_animator._bumperActive)
+            DoBumperDamage(col);
+        }
+    }
+
+    void OnCollisionStay2D(Collision2D col)
+    {
+        if (col.gameObject.GetComponent<Rigidbody2D>() != null)
+        {
+            DoBumperDamage(col);
+        }
+    }
+
+
+    void DoBumperDamage(Collision2D col)
+    {
+        if (_animator._bumperActive)
+        {
+            Vector3 direction = col.gameObject.transform.position - transform.parent.transform.position;
+            float _thisImpulse = (Constants.BUMPER_IMPULSE_MAG * Mathf.Sqrt(rg2d.velocity.SqrMagnitude())) + Constants.BASE_BUMPER_IMPLUSE;
+
+            float _thisVel = rg2d.velocity.magnitude;
+
+            float _otherVel = col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude;
+
+            float _velDifference = Mathf.Abs(_thisVel - _otherVel);
+
+            float _thisMomemtum = GetComponentInParent<EntityMovementHandler>().GetForce;
+            float _otherMomentum = col.gameObject.GetComponent<EntityMovementHandler>().GetForce;
+
+            float _momemtumDiff = Mathf.Abs(Mathf.Abs(_thisMomemtum) - Mathf.Abs(_otherMomentum));
+
+
+            float entityDamage = (_momemtumDiff / 400.0f) * Constants.BUMPER_DAMAGE_BASE;
+            //  Logger.Log(_thisMomemtum + " "  + _otherMomentum +  " ==== " +  _momemtumDiff + "\n" + " Entity Damage -> " + entityDamage);
+
+            //Logger.Log(transform.parent + " Velocities -> " + _thisVel + " " + _otherVel +  " " + _velDifference + "\n" + "Entity Damage -> " +  entityDamage);
+
+
+
+
+            if (col.gameObject.GetComponent<EntityMovementHandler>().GetType() == typeof(MovementHandler))
             {
-                Vector3 direction = col.gameObject.transform.position - transform.parent.transform.position;
-                float _thisImpulse = (Constants.BUMPER_IMPULSE_MAG * Mathf.Sqrt(GetComponentInParent<Rigidbody2D>().velocity.SqrMagnitude())) + Constants.BASE_BUMPER_IMPLUSE;
+                MovementHandler _movementHandler = (MovementHandler)col.gameObject.GetComponent<EntityMovementHandler>();
+                _movementHandler.DoDamage(entityDamage);
 
-                float _thisVel = GetComponentInParent<Rigidbody2D>().velocity.magnitude;
-
-                float _otherVel = col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude;
-
-                float _velDifference = Mathf.Abs(_thisVel - _otherVel);
-
-                float entityDamage = (_velDifference / 100.0f) * Constants.BUMPER_DAMAGE_BASE;
-
-
-                if (col.gameObject.GetComponent<EntityMovementHandler>().GetType() == typeof(MovementHandler))
-                {
-                    MovementHandler _movementHandler = (MovementHandler)col.gameObject.GetComponent<EntityMovementHandler>();
-
-                    _movementHandler.DoDamage(entityDamage);
-                    //Logger.Log("PLAYER HEALTH => " + _movementHandler.Health);
-
-
-                } else if (col.gameObject.GetComponent<EntityMovementHandler>().GetType() == typeof(AIMovementHandler))
-                {
-                    AIMovementHandler _aiMovementHandler = (AIMovementHandler)col.gameObject.GetComponent<EntityMovementHandler>();
-                    _aiMovementHandler.DoDamage(entityDamage);
-                   // Logger.Log("BOT HEALTH => " + _aiMovementHandler.Health);
-                }
-
-                col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction.normalized * _thisImpulse);
-
-                _hit = true;
+            } else if (col.gameObject.GetComponent<EntityMovementHandler>().GetType() == typeof(AIMovementHandler))
+            {
+                AIMovementHandler _aiMovementHandler = (AIMovementHandler)col.gameObject.GetComponent<EntityMovementHandler>();
+                _aiMovementHandler.DoDamage(entityDamage);
             }
+
+            col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction.normalized * _thisImpulse);
+
+            _hit = true;
         }
     }
 

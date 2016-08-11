@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Instantiator : MonoBehaviour {
 
+	private GameSceneManager _gameSceneManager;
 	private GameObject Player;
 	private GameObject AI;
 	private GameObject EntityIconPrefab;
@@ -14,12 +15,13 @@ public class Instantiator : MonoBehaviour {
 	void Awake () {
 		Init();
 		InstantiatePlayer();
-		//InstantiateAI(6);
+		//InstantiateAI(1);
 	}
 
 	private void Init()
 	{
 		_cameraController = Camera.main.GetComponent<CameraController>();
+		_gameSceneManager = GameObject.FindWithTag("GameSceneManager").GetComponent<GameSceneManager>();
 		Player = (GameObject)Resources.Load("Prefabs/Player");
 		AI = (GameObject)Resources.Load("Prefabs/Bot");
 		EntityIconPrefab = (GameObject)Resources.Load("Prefabs/EntityIcon");
@@ -34,7 +36,7 @@ public class Instantiator : MonoBehaviour {
 		_cameraController.targetTransforms.Add(_playerClone.transform);
 		InstantiateEntityIcon(_playerClone.GetComponent<MovementHandler>());
 		GameSceneManager.TOTAL_PLAYERS++;
-		GameSceneManager.Players.Add(_playerClone.GetComponent<MovementHandler>()); 
+		GameSceneManager.Players.Add(_playerClone.GetComponent<MovementHandler>());
 	}
 
 	private void InstantiateAI(int amount)
@@ -50,7 +52,7 @@ public class Instantiator : MonoBehaviour {
 			_cameraController.targetTransforms.Add(AI_Clone.transform);
 			InstantiateEntityIcon(AI_Clone.GetComponent<AIMovementHandler>());
 			GameSceneManager.TOTAL_PLAYERS++;
-			GameSceneManager.Players.Add(AI_Clone.GetComponent<AIMovementHandler>()); 
+			GameSceneManager.Players.Add(AI_Clone.GetComponent<AIMovementHandler>());
 		}
 	}
 
@@ -60,7 +62,6 @@ public class Instantiator : MonoBehaviour {
 		_entityIcon.GetComponent<EntityIcon>().Target = enm;
 		_entityIcon.transform.parent = UICanvas.transform.FindChild("Background").transform;
 		RectTransform _rTransform = _entityIcon.GetComponent<RectTransform>();
-		//_rTransform.localScale = new Vector3(.547f, .547f, 1);
 		_rTransform.anchoredPosition = new Vector2((GameSceneManager.TOTAL_PLAYERS * 150.0f) + 50, 0);
 	}
 
@@ -68,7 +69,7 @@ public class Instantiator : MonoBehaviour {
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.R))
+		if (Input.GetKeyDown(KeyCode.R) || _gameSceneManager.CustomInputManager.GetInputEventPress == InputEvent.GameInputEventPress.SPAWN)
 		{
 			InstantiateAI(1);
 		}

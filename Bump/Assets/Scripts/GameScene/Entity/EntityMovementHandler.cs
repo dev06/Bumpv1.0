@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 public class EntityMovementHandler : MonoBehaviour {
 
+	protected GameSceneManager _gameSceneManager; 
 	protected Rigidbody2D rg2d;
 	protected PolygonCollider2D pCol2D;
 	protected bool _boosted = false;
@@ -11,7 +12,9 @@ public class EntityMovementHandler : MonoBehaviour {
 	protected float _boostCounter          = 0.0f;
 	protected float _health;
 	protected float MaxHealth;
+	protected float Force; 
 	protected Color color; 
+	private float _oldMagnitude; 
 
 
 	void Start () {
@@ -23,7 +26,7 @@ public class EntityMovementHandler : MonoBehaviour {
 			rg2d = GetComponent<Rigidbody2D>();
 			pCol2D = transform.FindChild("BumperCollider").GetComponent<PolygonCollider2D>();
 			_animator = GetComponent<CustomAnimator>();
-	
+			_gameSceneManager = GameObject.FindWithTag("GameSceneManager").GetComponent<GameSceneManager>(); 
 		} catch (Exception e) {
 			Debug.LogError("One of the component is not found : Source EntityMovementHandler ");
 		}
@@ -58,7 +61,6 @@ public class EntityMovementHandler : MonoBehaviour {
 		{
 			Vector2 force = movement * boost;
 			rg2d.AddForce(force);
-			Logger.Log("Force Added");
 			_boosted = true;
 		}
 	}
@@ -122,11 +124,11 @@ public class EntityMovementHandler : MonoBehaviour {
 			_health -= damage;
 		}
 
-		if (_health < 0)
+		if (_health <= 0)
 		{
-			Destroy(gameObject);
 			GameSceneManager.TOTAL_PLAYERS--; 
 			GameSceneManager.Players.Remove(this); 
+			Destroy(gameObject);
 		}
 	}
 
@@ -136,16 +138,32 @@ public class EntityMovementHandler : MonoBehaviour {
 	}
 
 
-	public float Health {
+	protected float CalculateForce(float time)
+	{
+		float currentMag = rg2d.velocity.magnitude; 
+		float accel = (currentMag - _oldMagnitude) / time; 
+		Force = rg2d.mass * accel; 
+		_oldMagnitude = currentMag; 
+		return Force; 
+	}
 
+
+	public float Health {
 		get {return _health;}
 		set {SetHealth(value); }
+	}
+
+	public float GetForce{
+		get{ return Force; }
 	}
 
 	public Color Color{
 		get {return color; }
 		set {color = value;}
 	}
+
+
+
 
 
 }

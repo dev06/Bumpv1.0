@@ -33,6 +33,14 @@ public class MovementHandler : EntityMovementHandler
         AdjustColliderOffset(_animator.index);
         CanBoost();
         Move();
+
+        //Debug
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            Health = 100;
+        }
+
+        CalculateForce(Time.deltaTime);
     }
 
     /// <summary>
@@ -40,16 +48,16 @@ public class MovementHandler : EntityMovementHandler
     /// </summary>
     void Move()
     {
-        float horizontal = Input.GetAxis((GameSceneManager.isControllerConnected) ? Constants.CONTROLLER_LEFT_STICK_HORIZONTAL : Constants.HORIZONTAL) * Time.deltaTime;
-        float vertical = Input.GetAxis((GameSceneManager.isControllerConnected) ? Constants.CONTROLLER_LEFT_STICK_VERTICAL : Constants.VERTICAL) * Time.deltaTime;
+        float horizontal = Input.GetAxis((_gameSceneManager.CustomInputManager.IsUsingController) ? Constants.CONTROLLER_LEFT_STICK_HORIZONTAL : Constants.HORIZONTAL) * Time.deltaTime;
+        float vertical = Input.GetAxis((_gameSceneManager.CustomInputManager.IsUsingController) ? Constants.CONTROLLER_LEFT_STICK_VERTICAL : Constants.VERTICAL) * Time.deltaTime;
         Vector2 movement = new Vector2(horizontal, vertical);
         rg2d.AddForce((movement * (Velocity * Velocity) / rg2d.mass));
 
         movementDirection = movement;
 
-        if (GameSceneManager.isControllerConnected)
+        if (_gameSceneManager.CustomInputManager.IsUsingController)
         {
-            if (Input.GetButtonDown(Constants.CONTROLLER_X_BUTTON))
+            if (_gameSceneManager.CustomInputManager.GetInputEventPress == InputEvent.GameInputEventPress.BOOST)
             {
                 bool boost;
                 Boost(movement, _startBoostForce, out boost);
@@ -58,12 +66,13 @@ public class MovementHandler : EntityMovementHandler
                 }
             }
 
-            if (Input.GetButton(Constants.CONTROLLER_SQUARE_BUTTON) && _animator._triggerHit == false && _animator._bumperActive == false)
+            if (_gameSceneManager.CustomInputManager.GetInputEventHold == InputEvent.GameInputEventHold.LIGHT_ATTACK && _animator._triggerHit == false && _animator._bumperActive == false)
             {
                 _animator._triggerHit = true;
                 _animator._bumperActive = true;
             }
         }
+
         else
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -83,7 +92,9 @@ public class MovementHandler : EntityMovementHandler
         }
 
         //AnimateBumper(1);
+
         FaceFoward(transform, movement);
+
     }
 
     void FixedUpdate()
@@ -102,9 +113,7 @@ public class MovementHandler : EntityMovementHandler
     public void DoDamage(float damage)
     {
         base.DoDamage(damage);
-
     }
-
 
     public bool IsBumperActive {
         get { return _animator._bumperActive; }

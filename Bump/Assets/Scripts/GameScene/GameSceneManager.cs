@@ -1,24 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class GameSceneManager : MonoBehaviour {
 
-    
-    public static int GAME_TIME = 0; 
-    public static int TOTAL_PLAYERS = 0; 
-    public static List<EntityMovementHandler> Players = new List<EntityMovementHandler>(); 
+
+    public static int GAME_TIME = 0;
+    public static int TOTAL_PLAYERS = 0;
+    public static List<EntityMovementHandler> Players = new List<EntityMovementHandler>();
 
     public static bool isControllerConnected;
     public Text fpsText;
+
+    private CustomInputManager _customInputManager;
     private GameObject GameCanvas;
+    private GameObject _environment;
     private int frames = 60;
 
     private int hello;
     void Awake () {
 
+
         Init();
-        IsControlledConnected();
+        //IsControlledConnected();
         LoadEnvironment();
 
 
@@ -27,13 +32,17 @@ public class GameSceneManager : MonoBehaviour {
     void Init()
     {
         GameCanvas = GameObject.FindWithTag("Canvas/GameCanvas");
+        _environment = GameObject.FindWithTag("Environment");
+        _customInputManager = GetComponent<CustomInputManager>();
     }
 
-
     void Update () {
-      
+
         //TODO temp
-        GAME_TIME = (int)Time.realtimeSinceStartup; 
+
+
+
+        GAME_TIME = (int)Time.realtimeSinceStartup;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
@@ -50,9 +59,17 @@ public class GameSceneManager : MonoBehaviour {
         {
             AIMovementHandler.TOGGLE = !AIMovementHandler.TOGGLE;
         }
-    
 
-     
+
+        if (CustomInputManager.GetInputEventPress == InputEvent.GameInputEventPress.RESET || Input.GetKeyDown(KeyCode.K))
+        {
+            ResetGameManager();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        }
+
+
+
 
         // if (mapping)
         // {
@@ -111,10 +128,34 @@ public class GameSceneManager : MonoBehaviour {
         environment.name = "Frozen";
         RectTransform _rTransform = environment.GetComponent<RectTransform>();
         environment.transform.parent = GameCanvas.transform;
-        _rTransform.position = new Vector3(0,0,1); 
+        _rTransform.position = new Vector3(0, 0, 1);
         _rTransform.localScale = new Vector3(1, 1, 0);
         _rTransform.offsetMin = new Vector2(0, 0);
         _rTransform.offsetMax = new Vector2(0, 0);
+    }
+
+
+    private void ResetGameManager()
+    {
+        TOTAL_PLAYERS = 0;
+        Players.Clear();
+        GAME_TIME = 0;
+        isControllerConnected = false;
+
+    }
+
+
+    public GameObject GetGameCanvas {
+        get { return GameCanvas; }
+    }
+
+
+    public CustomInputManager CustomInputManager
+    {
+        get
+        {
+            return _customInputManager;
+        }
     }
 
 
