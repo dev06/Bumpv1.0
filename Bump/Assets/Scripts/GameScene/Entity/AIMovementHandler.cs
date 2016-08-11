@@ -40,7 +40,7 @@ public class AIMovementHandler : EntityMovementHandler {
 
 
 	//DEBUG MEMBERS
-	public static bool TOGGLE;
+	public static bool TOGGLE = true;
 
 	void Start () {
 		Init();
@@ -56,7 +56,7 @@ public class AIMovementHandler : EntityMovementHandler {
 		_animator = GetComponent<CustomAnimator>();
 		_bumper = GetComponentInChildren<Bumper>();
 		GetComponent<SpriteRenderer>().color = color;
-		Health = .1f;
+		Health = 100.1f;
 	}
 
 	// Update is called once per framesd
@@ -85,6 +85,7 @@ public class AIMovementHandler : EntityMovementHandler {
 			if (isDead()) Destroy();
 			Move(TOGGLE);
 			AnimateBotBumper(1);
+			CalculateForce(Time.deltaTime); 
 		} else
 		{
 			ChooseNextTarget();
@@ -284,8 +285,7 @@ public class AIMovementHandler : EntityMovementHandler {
 
 	public void DoDamage(float damage)
 	{
-		base.DoDamage(damage);
-
+		base.DoDamage(damage); 
 	}
 
 	public float Health {

@@ -7,6 +7,7 @@ public class Logger : MonoBehaviour {
 	private static bool printLog = true;
 	private static bool printEvent = true;
 	private static bool printTask = true;
+	private static bool printInfo = true;
 	public static void Log(Vector3 content)
 	{
 		if (printAll) {
@@ -39,6 +40,9 @@ public class Logger : MonoBehaviour {
 			} else if (type == LoggerType.TASK && printTask)
 			{
 				Debug.Log(type + " => <color=green>" + o + "</color>");
+			} else if (type == LoggerType.INFO &&  printInfo)
+			{
+				Debug.Log(type + " => <color=purple>" + o + "</color>");
 			}
 		}
 	}
@@ -53,6 +57,7 @@ public enum LoggerType
 	LOG,
 	TASK,
 	EVENT,
+	INFO,
 }
 
 

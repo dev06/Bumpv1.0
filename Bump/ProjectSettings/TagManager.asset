@@ -11,6 +11,8 @@ TagManager:
   - Icon/EntityIcon/InnerIcon
   - Icon/EntityIcon/Fill
   - Icon/EntityIcon/Text
+  - GameSceneManager
+  - Environment
   layers:
   - Default
   - TransparentFX
