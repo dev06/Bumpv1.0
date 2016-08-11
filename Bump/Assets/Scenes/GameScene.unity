@@ -146,7 +146,7 @@ Camera:
   far clip plane: 500
   field of view: 60
   orthographic: 1
-  orthographic size: 225
+  orthographic size: 224.05
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -225,7 +225,11 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
+<<<<<<< HEAD
   m_SizeDelta: {x: 0, y: 57.100006}
+=======
+  m_SizeDelta: {x: 924, y: 57.1}
+>>>>>>> parent of 91017c4... commit
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &345790457
 MonoBehaviour:
@@ -432,7 +436,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1003911197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,7 +480,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1003911196}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_RenderMode: 2
   m_Camera: {fileID: 213795377}
