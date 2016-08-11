@@ -16,8 +16,11 @@ public class AIMovementHandler : EntityMovementHandler {
 	private Vector2 _partrolVec = Vector2.zero;
 	private bool hit;
 	private float minForceDistance           = 10; //when to stop adding force
+<<<<<<< HEAD
+=======
 	public float _velocity                  = 65f;
 
+>>>>>>> 7a9338b50ce1ea3bf7d19cc7f36ced345cfd89a1
 	private float updatePositionEvery        = .5f;
 	private float attackFrequency            = .8f;  //0.0f (0%) - 1.0f (100%)
 	private float _boostForce 				 = 1000f;
@@ -238,8 +241,6 @@ public class AIMovementHandler : EntityMovementHandler {
 			}
 		}
 	}
-
-
 
 	private Vector2 Patrol()
 	{

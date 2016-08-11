@@ -9,7 +9,11 @@ public class CameraController : MonoBehaviour {
 	public List<Transform> targetTransforms;
 
 	public float ZoomOffset                                                                        = 1.0f;
+<<<<<<< HEAD
+	public float MAXZoom                                                                           = 225.0f;
+=======
 
+>>>>>>> 7a9338b50ce1ea3bf7d19cc7f36ced345cfd89a1
 	public float SmoothPosition                                                                    = 1.0f; // TIME IT TAKES TO DAMP TO NEXT POSITION
 
 	public float SmoothZoom                                                                        = .25f;     // TIME IT TAKES TO DAMP TO NEXT ZOOM
@@ -77,6 +81,10 @@ public class CameraController : MonoBehaviour {
 
 	void Update ()
 	{
+<<<<<<< HEAD
+		
+=======
+>>>>>>> 7a9338b50ce1ea3bf7d19cc7f36ced345cfd89a1
 		if (targetTransforms.Count > 0)
 		{
 			float _camX;
