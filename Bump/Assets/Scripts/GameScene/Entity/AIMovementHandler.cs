@@ -9,13 +9,14 @@ public class AIMovementHandler : EntityMovementHandler {
 	public GameObject Ring;
 	public GameObject target;
 	#endregion--/PUBLIC VARS--
-	
+
 	private Bumper _bumper;
 	private Vector2 previousPosition;
 	private Vector2 force = Vector2.zero;
 	private Vector2 _partrolVec = Vector2.zero;
 	private bool hit;
 	private float minForceDistance           = 10; //when to stop adding force
+	public float _velocity                  = 65f;
 
 	private float updatePositionEvery        = .5f;
 	private float attackFrequency            = .8f;  //0.0f (0%) - 1.0f (100%)
@@ -24,7 +25,6 @@ public class AIMovementHandler : EntityMovementHandler {
 	private float _startBoostSpeed           = 20.0f;
 	private float _straightDistanceOffset    = 30f;
 	private float _angle                     = 10f;
-	private float _velocity                  = 65f;
 	private float _evadeFrequency 			 = .01f;
 	private float _evadeForce                = 400f;
 	private float _changeDirFreq             = .02f;
@@ -82,10 +82,10 @@ public class AIMovementHandler : EntityMovementHandler {
 	{
 		if (target != null)
 		{
-			if (isDead()) Destroy();
+			if (isDead()) { Destroy(); }
 			Move(TOGGLE);
 			AnimateBotBumper(1);
-			CalculateForce(Time.deltaTime); 
+			CalculateForce(Time.deltaTime);
 		} else
 		{
 			ChooseNextTarget();
@@ -285,7 +285,7 @@ public class AIMovementHandler : EntityMovementHandler {
 
 	public void DoDamage(float damage)
 	{
-		base.DoDamage(damage); 
+		base.DoDamage(damage);
 	}
 
 	public float Health {

@@ -5,7 +5,7 @@ public class Bumper : MonoBehaviour {
 
     // Use this for initialization
     private bool _hit;
-    private Rigidbody2D rg2d; 
+    private Rigidbody2D rg2d;
     private GameObject _collidingObject;
     private CustomAnimator _animator;
 
@@ -15,7 +15,7 @@ public class Bumper : MonoBehaviour {
 
         try {
             _animator = GetComponentInParent<CustomAnimator>();
-            rg2d = GetComponentInParent<Rigidbody2D>(); 
+            rg2d = GetComponentInParent<Rigidbody2D>();
         } catch (Exception e) {
             Debug.Log("Components could not be found");
         }
@@ -33,15 +33,15 @@ public class Bumper : MonoBehaviour {
     {
         if (col.gameObject.GetComponent<Rigidbody2D>() != null)
         {
-            DoBumperDamage(col); 
-        }   
+            DoBumperDamage(col);
+        }
     }
 
     void OnCollisionStay2D(Collision2D col)
     {
-        if(col.gameObject.GetComponent<Rigidbody2D>() != null)
+        if (col.gameObject.GetComponent<Rigidbody2D>() != null)
         {
-            DoBumperDamage(col); 
+            DoBumperDamage(col);
         }
     }
 
@@ -59,18 +59,18 @@ public class Bumper : MonoBehaviour {
 
             float _velDifference = Mathf.Abs(_thisVel - _otherVel);
 
-            float _thisMomemtum = GetComponentInParent<EntityMovementHandler>().GetForce; 
-            float _otherMomentum = col.gameObject.GetComponent<EntityMovementHandler>().GetForce; 
+            float _thisMomemtum = GetComponentInParent<EntityMovementHandler>().GetForce;
+            float _otherMomentum = col.gameObject.GetComponent<EntityMovementHandler>().GetForce;
 
-            float _momemtumDiff = Mathf.Abs(Mathf.Abs(_thisMomemtum) - Mathf.Abs(_otherMomentum)); 
+            float _momemtumDiff = Mathf.Abs(Mathf.Abs(_thisMomemtum) - Mathf.Abs(_otherMomentum));
 
 
             float entityDamage = (_momemtumDiff / 400.0f) * Constants.BUMPER_DAMAGE_BASE;
-          //  Logger.Log(_thisMomemtum + " "  + _otherMomentum +  " ==== " +  _momemtumDiff + "\n" + " Entity Damage -> " + entityDamage); 
+            //  Logger.Log(_thisMomemtum + " "  + _otherMomentum +  " ==== " +  _momemtumDiff + "\n" + " Entity Damage -> " + entityDamage);
 
             //Logger.Log(transform.parent + " Velocities -> " + _thisVel + " " + _otherVel +  " " + _velDifference + "\n" + "Entity Damage -> " +  entityDamage);
 
-          
+
 
 
             if (col.gameObject.GetComponent<EntityMovementHandler>().GetType() == typeof(MovementHandler))
@@ -84,7 +84,7 @@ public class Bumper : MonoBehaviour {
                 _aiMovementHandler.DoDamage(entityDamage);
             }
 
-            //col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction.normalized * _thisImpulse);
+            col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction.normalized * _thisImpulse);
 
             _hit = true;
         }

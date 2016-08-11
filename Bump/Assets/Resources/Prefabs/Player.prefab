@@ -171,7 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BoostRing: {fileID: 116578, guid: da16c297c278fc44a86055b8fd62d8dd, type: 2}
   movementDirection: {x: 0, y: 0}
-  Velocity: 65
+  Velocity: 50
 --- !u!212 &21202000
 SpriteRenderer:
   m_ObjectHideFlags: 1
