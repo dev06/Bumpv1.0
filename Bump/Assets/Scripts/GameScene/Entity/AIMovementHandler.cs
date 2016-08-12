@@ -39,6 +39,8 @@ public class AIMovementHandler : EntityMovementHandler {
 	private bool inContactWithTarget;
 
 
+
+
 	//DEBUG MEMBERS
 	public static bool TOGGLE = true;
 
