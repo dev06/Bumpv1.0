@@ -186,12 +186,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransforms: []
   ZoomOffset: 115
+  MAXZoom: 225
   SmoothPosition: 1
   SmoothZoom: 19.36
   PositionResetAmount: 0.5
   ZoomResetAmount: 0.5
   ZoomDampTo: 0.1
   PositionDampTo: 0
+  ShouldJitterCamera: 0
 --- !u!1 &345790455
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,7 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.222}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -580,6 +582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b269d2744b7e869448915a6a36b420a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraController: {fileID: 0}
   fpsText: {fileID: 1736983981}
 --- !u!4 &1690654104
 Transform:

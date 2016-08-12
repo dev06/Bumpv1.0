@@ -44,8 +44,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126232}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.45, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.8, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 458490}
@@ -57,8 +57,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.9047692, y: 1.2999725, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalPosition: {x: -8.830051, y: 1.777295, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 453306}
@@ -94,7 +94,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.6496544
+  m_Radius: 1.4225858
 --- !u!60 &6085002
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -134,15 +134,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
-  - {fileID: 21300000, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  - {fileID: 21300002, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  - {fileID: 21300004, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  - {fileID: 21300006, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  - {fileID: 21300008, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  - {fileID: 21300010, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  - {fileID: 21300012, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  - {fileID: 21300014, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
-  - {fileID: 21300016, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
+  - {fileID: 21300018, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
+  - {fileID: 21300020, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
+  - {fileID: 21300022, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
+  - {fileID: 21300024, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
+  - {fileID: 21300026, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
+  - {fileID: 21300028, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
+  - {fileID: 21300030, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
+  - {fileID: 21300032, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
+  - {fileID: 21300034, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
+  - {fileID: 21300036, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
+  - {fileID: 21300038, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
+  - {fileID: 21300040, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
   _bumperActive: 0
   _triggerHit: 0
   reverse: 0
@@ -198,7 +201,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
+  m_Sprite: {fileID: 21300018, guid: 431a8383c180827408928ba9fbebf22d, type: 3}
   m_Color: {r: 0.48245445, g: 0.9852941, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -10,7 +10,6 @@ public class CameraController : MonoBehaviour {
 
 	public float ZoomOffset                                                                        = 1.0f;
 
-
 	public float MAXZoom                                                                           = 225.0f;
 
 	public float SmoothPosition                                                                    = 1.0f; // TIME IT TAKES TO DAMP TO NEXT POSITION
@@ -25,7 +24,7 @@ public class CameraController : MonoBehaviour {
 
 	public float PositionDampTo;
 
-
+	public bool ShouldJitterCamera;
 
 
 	private GameSceneManager _gsm;
@@ -80,6 +79,7 @@ public class CameraController : MonoBehaviour {
 	void Update ()
 	{
 
+
 		if (targetTransforms.Count > 0)
 		{
 			float _camX;
@@ -120,6 +120,8 @@ public class CameraController : MonoBehaviour {
 
 			SetCameraBounds(_negVerticalBound, _posVerticalBound, _negHorizontalBound, _posHorizontalBound);
 		}
+
+		//JitterCamera(3);
 	}
 
 	float GetDistance(Transform current, Transform next)
@@ -202,7 +204,7 @@ public class CameraController : MonoBehaviour {
 
 	void SetCameraBounds(float negVertical, float posVertical, float negHorizontal, float posHorizontal)
 	{
-		Vector3 boundedPosition = transform.position;
+		Vector3 boundedPosition = transform.position + JitterCamera(5);
 		if (boundedPosition.y < negVertical)
 		{
 			boundedPosition.y = negVertical;
@@ -220,5 +222,29 @@ public class CameraController : MonoBehaviour {
 			boundedPosition.x = posHorizontal;
 		}
 		transform.position = boundedPosition;
+	}
+
+	public IEnumerator DisableJitter()
+	{
+		yield return new WaitForSeconds(.25f);
+		ShouldJitterCamera = false;
+	}
+
+
+	public Vector3 JitterCamera(float intensity)
+	{
+		if (ShouldJitterCamera)
+		{
+			StartCoroutine("DisableJitter");
+		}
+
+		if (ShouldJitterCamera)
+		{
+			return new Vector3(Mathf.PingPong(5.0f / Time.deltaTime, Random.Range(1, intensity)), Mathf.PingPong(5.0f / Time.deltaTime, Random.Range(1, intensity)), transform.position.z);
+		}
+
+		return Vector3.zero;
+
+
 	}
 }

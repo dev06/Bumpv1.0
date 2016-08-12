@@ -7,6 +7,7 @@ public class Bumper : MonoBehaviour {
     private bool _hit;
     private Rigidbody2D rg2d;
     private GameObject _collidingObject;
+    private CameraController _mainCamera;
     private CustomAnimator _animator;
 
 
@@ -16,6 +17,7 @@ public class Bumper : MonoBehaviour {
         try {
             _animator = GetComponentInParent<CustomAnimator>();
             rg2d = GetComponentInParent<Rigidbody2D>();
+            _mainCamera = Camera.main.GetComponent<CameraController>();
         } catch (Exception e) {
             Debug.Log("Components could not be found");
         }
@@ -45,11 +47,11 @@ public class Bumper : MonoBehaviour {
         }
     }
 
-
     void DoBumperDamage(Collision2D col)
     {
         if (_animator._bumperActive)
         {
+            _mainCamera.ShouldJitterCamera = true;
             Vector3 direction = col.gameObject.transform.position - transform.parent.transform.position;
             float _thisImpulse = (Constants.BUMPER_IMPULSE_MAG * Mathf.Sqrt(rg2d.velocity.SqrMagnitude())) + Constants.BASE_BUMPER_IMPLUSE;
 

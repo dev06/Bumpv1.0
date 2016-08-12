@@ -7,7 +7,7 @@ public class MovementHandler : EntityMovementHandler
     #region--- PRIVATE MEMBERS---
 
     private bool isUsingController = false;
-    private float _startBoostForce = 2000f;
+    private float _startBoostForce = 20f;
     //public Color color;
 
     #endregion---/PRIVATE MEMEBERS
@@ -60,9 +60,13 @@ public class MovementHandler : EntityMovementHandler
             if (_gameSceneManager.CustomInputManager.GetInputEventPress == InputEvent.GameInputEventPress.BOOST)
             {
                 bool boost;
-                Boost(movement, _startBoostForce, out boost);
+                Boost(movement, Mathf.Pow(_startBoostForce, 4.2f), out boost);
                 if (boost) {
-                    AddExternalObject(BoostRing, transform.position, transform.rotation, color);
+                    for (int i = 0; i < 5; i++)
+                    {
+                        AddExternalObject(BoostRing, transform.position, transform.rotation, color);
+                    }
+                    _gameSceneManager._cameraController.ShouldJitterCamera = true;
                 }
             }
 

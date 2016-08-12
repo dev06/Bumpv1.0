@@ -10,6 +10,7 @@ public class GameSceneManager : MonoBehaviour {
     public static int TOTAL_PLAYERS = 0;
     public static List<EntityMovementHandler> Players = new List<EntityMovementHandler>();
 
+    public CameraController _cameraController;
     public static bool isControllerConnected;
     public Text fpsText;
 
@@ -34,6 +35,7 @@ public class GameSceneManager : MonoBehaviour {
         GameCanvas = GameObject.FindWithTag("Canvas/GameCanvas");
         _environment = GameObject.FindWithTag("Environment");
         _customInputManager = GetComponent<CustomInputManager>();
+        _cameraController = Camera.main.GetComponent<CameraController>();
     }
 
     void Update () {
@@ -157,6 +159,7 @@ public class GameSceneManager : MonoBehaviour {
             return _customInputManager;
         }
     }
+
 
 
 

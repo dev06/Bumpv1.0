@@ -38,9 +38,9 @@ public class EntityIcon : MonoBehaviour {
 	{
 		_fill.fillAmount = Mathf.SmoothDamp(_fill.fillAmount, Target.Health / 100.0f, ref fillVel, .5f);
 		_text.text = "" + ((int)(_fill.fillAmount * SCALE));
-		
+
 		AnimatePopUp(_expand);
-		DestroyThis(); 
+		DestroyThis();
 	}
 
 	void AnimatePopUp(bool _expand)
@@ -55,16 +55,14 @@ public class EntityIcon : MonoBehaviour {
 		}
 	}
 
-
-
 	void DestroyThis()
 	{
 		if (Target == null)
 		{
 			_expand = false;
-			if(_rTransform.localScale.x < 0.01f)
+			if (_rTransform.localScale.x < 0.01f)
 			{
-				Destroy(gameObject); 
+				Destroy(gameObject);
 			}
 		}
 	}
