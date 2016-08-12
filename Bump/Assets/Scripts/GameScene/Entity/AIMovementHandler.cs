@@ -15,8 +15,12 @@ public class AIMovementHandler : EntityMovementHandler {
 	private Vector2 force = Vector2.zero;
 	private Vector2 _partrolVec = Vector2.zero;
 	private bool hit;
-	private float minForceDistance           = 10; //when to stop adding force
+
+
 	public float _velocity                  = 65f;
+
+
+	private float minForceDistance           =  10; //when to stop adding force
 
 	private float updatePositionEvery        = .5f;
 	private float attackFrequency            = .8f;  //0.0f (0%) - 1.0f (100%)
@@ -241,8 +245,6 @@ public class AIMovementHandler : EntityMovementHandler {
 		}
 	}
 
-
-
 	private Vector2 Patrol()
 	{
 		float differenceOffset = 50;
@@ -288,6 +290,7 @@ public class AIMovementHandler : EntityMovementHandler {
 	public void DoDamage(float damage)
 	{
 		base.DoDamage(damage);
+
 	}
 
 	public float Health {
