@@ -53,26 +53,16 @@ public class Bumper : MonoBehaviour {
         {
             _mainCamera.ShouldJitterCamera = true;
             Vector3 direction = col.gameObject.transform.position - transform.parent.transform.position;
-            float _thisImpulse = (Constants.BUMPER_IMPULSE_MAG * Mathf.Sqrt(rg2d.velocity.SqrMagnitude())) + Constants.BASE_BUMPER_IMPLUSE;
 
-            float _thisVel = rg2d.velocity.magnitude;
-
-            float _otherVel = col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude;
-
-            float _velDifference = Mathf.Abs(_thisVel - _otherVel);
 
             float _thisMomemtum = GetComponentInParent<EntityMovementHandler>().GetForce;
+
             float _otherMomentum = col.gameObject.GetComponent<EntityMovementHandler>().GetForce;
 
             float _momemtumDiff = Mathf.Abs(Mathf.Abs(_thisMomemtum) - Mathf.Abs(_otherMomentum));
 
 
             float entityDamage = (_momemtumDiff / 400.0f) * Constants.BUMPER_DAMAGE_BASE;
-            //  Logger.Log(_thisMomemtum + " "  + _otherMomentum +  " ==== " +  _momemtumDiff + "\n" + " Entity Damage -> " + entityDamage);
-
-            //Logger.Log(transform.parent + " Velocities -> " + _thisVel + " " + _otherVel +  " " + _velDifference + "\n" + "Entity Damage -> " +  entityDamage);
-
-
 
 
             if (col.gameObject.GetComponent<EntityMovementHandler>().GetType() == typeof(MovementHandler))
@@ -86,7 +76,8 @@ public class Bumper : MonoBehaviour {
                 _aiMovementHandler.DoDamage(entityDamage);
             }
 
-            col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction.normalized * _thisImpulse);
+
+            col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction.normalized * _momemtumDiff * 5.0f);
 
             _hit = true;
         }

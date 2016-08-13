@@ -40,7 +40,7 @@ public class AIMovementHandler : EntityMovementHandler {
 
 
 	//DEBUG MEMBERS
-	public static bool TOGGLE = true;
+	public static bool TOGGLE = false;
 
 	void Start () {
 		Init();
@@ -215,7 +215,8 @@ public class AIMovementHandler : EntityMovementHandler {
 			if (rg2d.velocity.SqrMagnitude() > _startBoostSpeed)
 			{
 				bool boosted;
-				Boost(force.normalized, _boostForce, out boosted);
+				Vector2 appliedForce;
+				Boost(force.normalized, _boostForce, out boosted, out appliedForce);
 				if (boosted)
 				{
 					AddExternalObject(Ring, transform.position, transform.rotation, color);

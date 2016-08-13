@@ -108,6 +108,7 @@ public class CustomInputManager : MonoBehaviour
 				if (Input.GetKeyDown("joystick " + 1 + " button " + BOOST))
 				{
 					_inputEventPress = InputEvent.GameInputEventPress.BOOST;
+
 				} else if (Input.GetKeyDown("joystick " + 1 + " button " + SPAWN))
 				{
 					_inputEventPress = InputEvent.GameInputEventPress.SPAWN;
@@ -122,6 +123,10 @@ public class CustomInputManager : MonoBehaviour
 			}
 		}
 	}
+
+
+
+
 
 	private bool IsControllerConnected()
 	{
@@ -205,9 +210,9 @@ public class InputEvent
 	{
 		DEAD,
 		BOOST,
+		DOUBLE_BOOST,
 		SPAWN,
 		RESET,
-
 	}
 
 	public enum GameInputEventHold

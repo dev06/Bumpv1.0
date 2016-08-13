@@ -18,8 +18,6 @@ public class MovementHandler : EntityMovementHandler
     public Vector2 movementDirection;
     public float Velocity;
 
-
-
     void Start()
     {
         base.Init();
@@ -48,6 +46,7 @@ public class MovementHandler : EntityMovementHandler
     /// </summary>
     void Move()
     {
+        Vector2 boostForce = Vector2.zero;
         float horizontal = Input.GetAxis((_gameSceneManager.CustomInputManager.IsUsingController) ? Constants.CONTROLLER_LEFT_STICK_HORIZONTAL : Constants.HORIZONTAL) * Time.deltaTime;
         float vertical = Input.GetAxis((_gameSceneManager.CustomInputManager.IsUsingController) ? Constants.CONTROLLER_LEFT_STICK_VERTICAL : Constants.VERTICAL) * Time.deltaTime;
         Vector2 movement = new Vector2(horizontal, vertical);
@@ -60,7 +59,9 @@ public class MovementHandler : EntityMovementHandler
             if (_gameSceneManager.CustomInputManager.GetInputEventPress == InputEvent.GameInputEventPress.BOOST)
             {
                 bool boost;
-                Boost(movement, Mathf.Pow(_startBoostForce, 4.2f), out boost);
+                Vector2 appliedForce;
+                Boost(movement, Mathf.Pow(_startBoostForce, 4.2f), out boost, out appliedForce);
+                boostForce = appliedForce;
                 if (boost) {
                     for (int i = 0; i < 5; i++)
                     {
@@ -82,7 +83,9 @@ public class MovementHandler : EntityMovementHandler
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 bool boost;
-                Boost(movement, _startBoostForce, out boost);
+                Vector2 appliedForce;
+                Boost(movement, _startBoostForce, out boost, out appliedForce);
+                boostForce = appliedForce;
                 if (_boosted) {
                     AddExternalObject(BoostRing, transform.position, transform.rotation, color);
                 }
@@ -98,8 +101,73 @@ public class MovementHandler : EntityMovementHandler
         //AnimateBumper(1);
 
         FaceFoward(transform, movement);
+        RegisterDoubleBoost();
+        DoubleBoost(boostForce);
 
     }
+
+    private void RegisterDoubleBoost()
+    {
+        if (_canBoost == false)
+        {
+            if (Input.GetKeyUp("joystick " + 1 + " button " + CustomInputManager.BOOST))
+            {
+                _canBoost = true;
+            }
+        }
+
+
+        if (_canBoost)
+        {
+            if (_doubleBoosted == false)
+            {
+                _doubleBoostTimer += Time.deltaTime;
+
+                if (_doubleBoostTimer < _doubleBoostDelay)
+                {
+                    if (_gameSceneManager.CustomInputManager.GetInputEventPress == InputEvent.GameInputEventPress.BOOST)
+                    {
+                        _doubleBoostTimer = 0;
+                        _doubleBoosted = true;
+                        _doubleBoostCoolDown = 0.3f;
+                        _canBoost = false;
+                    }
+                } else
+                {
+                    _doubleBoostTimer = 0;
+                    _doubleBoosted = false;
+                    _canBoost = false;
+                }
+            } else {
+                if (_doubleBoostCoolDown > 0.0f)
+                {
+                    _doubleBoostCoolDown -= Time.deltaTime;
+                } else
+                {
+                    _doubleBoosted = false;
+                    _canBoost = false;
+                }
+            }
+        }
+    }
+
+
+    public override void DoubleBoost(Vector3 boostForce)
+    {
+        if (_doubleBoosted)
+        {
+            bool boost;
+            Vector2 appliedForce;
+            Boost(boostForce, Mathf.Pow(_startBoostForce, 5.6f), out boost, out appliedForce);
+            if (_boosted) {
+                AddExternalObject(BoostRing, transform.position, transform.rotation, color);
+            }
+        }
+    }
+
+
+
+
 
     void FixedUpdate()
     {

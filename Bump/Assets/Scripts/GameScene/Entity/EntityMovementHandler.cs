@@ -14,6 +14,12 @@ public class EntityMovementHandler : MonoBehaviour {
 	protected float MaxHealth;
 	protected float Force;
 	protected Color color;
+	protected float _doubleBoostTimer = 0.0f;
+	protected float _doubleBoostDelay = 1.0f;
+	protected float _doubleBoostCoolDown = 0.0f;
+	protected bool _doubleBoosted;
+	protected bool _canBoost;
+
 	private float _oldMagnitude;
 
 
@@ -40,19 +46,21 @@ public class EntityMovementHandler : MonoBehaviour {
 
 	}
 
-	protected void Boost(Vector2 movement, float boost, out bool isBoosting)
+	protected void Boost(Vector2 movement, float boost, out bool isBoosting, out Vector2 appliedForce)
 	{
+		appliedForce = Vector2.zero;
 		if (_boosted == false && (movement != Vector2.zero || (Mathf.Abs(rg2d.velocity.x) >= 2 || Mathf.Abs(rg2d.velocity.y) >= 2)))
 		{
 			Vector2 force = movement * boost;
 			rg2d.AddForce(force);
-
 			_boosted = true;
 			isBoosting = _boosted;
+			appliedForce = force;
 		} else {
 
 			isBoosting = false;
 		}
+
 	}
 
 	protected void Boost(Vector2 movement, float boost)
@@ -76,6 +84,11 @@ public class EntityMovementHandler : MonoBehaviour {
 				_boosted = false;
 			}
 		}
+	}
+
+	public virtual void DoubleBoost(Vector3 movement)
+	{
+
 	}
 
 	protected void AddExternalObject(GameObject obj, Vector3 position, Quaternion rotation, Color color)
