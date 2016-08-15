@@ -153,25 +153,36 @@ public class CustomInputManager : MonoBehaviour
 			{
 				switch (ControllerNames[i])
 				{
-					case "Controller (Xbox 360 Wireless Receiver for Windows)":
-					{
-						Logger.Log("Controller Mapped For Xbox 360 / PS3", LoggerType.INFO);
-						LIGHT_ATTACK = 2;
-						BOOST = 0;
-						mappedController = true;
-						break;
-					}
+				case "Controller (Xbox 360 Wireless Receiver for Windows)":
+				{
+					Logger.Log("Controller Mapped For Xbox 360 / PS3", LoggerType.INFO);
+					LIGHT_ATTACK = 2;
+					BOOST = 0;
+					mappedController = true;
+					break;
+				}
 
-					case "ipega media gamepad controller":
-					{
-						Logger.Log("Controller Mapped For ipega media gamepad controller", LoggerType.INFO);
-						LIGHT_ATTACK = 2;
-						BOOST = 0;
-						SPAWN = 7;
-						RESET = 5;
-						mappedController = true;
-						break;
-					}
+				case "ipega media gamepad controller":
+				{
+					Logger.Log("Controller Mapped For ipega media gamepad controller", LoggerType.INFO);
+					LIGHT_ATTACK = 2;
+					BOOST = 0;
+					SPAWN = 7;
+					RESET = 5;
+					mappedController = true;
+					break;
+				}
+
+				case "ipega Bluetooth Gamepad   ":
+				{
+					Logger.Log("Controller Mapped For ipega media gamepad controller", LoggerType.INFO);
+					LIGHT_ATTACK = 3;
+					BOOST = 0;
+					SPAWN = 7;
+					RESET = 5;
+					mappedController = true;
+					break;
+				}
 				}
 			}
 		}
