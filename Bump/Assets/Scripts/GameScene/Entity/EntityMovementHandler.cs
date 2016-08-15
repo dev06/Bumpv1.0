@@ -13,6 +13,7 @@ public class EntityMovementHandler : MonoBehaviour {
 	protected float _health;
 	protected float MaxHealth;
 	protected float Force;
+	protected float Velocity;
 	protected Color color;
 	protected float _doubleBoostTimer = 0.0f;
 	protected float _doubleBoostDelay = 1.0f;
@@ -164,8 +165,24 @@ public class EntityMovementHandler : MonoBehaviour {
 	{
 		if (col.gameObject.GetComponent<EntityMovementHandler>() != null)
 		{
-			if (col.gameObject.GetComponent<EntityMovementHandler>().GetType() == typeof(AIMovementHandler)) {
+			EntityMovementHandler _thisObject = this;
+			EntityMovementHandler _otherObject = col.gameObject.GetComponent<EntityMovementHandler>();
+			Rigidbody2D _otherRigidBody = col.gameObject.GetComponent<Rigidbody2D>();
+			float _differenceForce = Mathf.Abs(Mathf.Abs(_thisObject.Velocity) - Mathf.Abs(_otherObject.Velocity));
+			float _differenceMass = Mathf.Abs(_otherRigidBody.mass - rg2d.mass);
+			Logger.Log("Difference Mass " + _differenceMass);
 
+			if (Mathf.Abs(_thisObject.Velocity) > Mathf.Abs(_otherObject.Velocity))
+			{
+				_otherObject.DoDamage((_differenceForce / 1000.0f) * 20.0f);
+			} else
+			{
+				_thisObject.DoDamage((_differenceForce / 1000.0f) * 20.0f);
+			}
+
+			if (col.gameObject.GetComponent<EntityMovementHandler>().GetType() == typeof(AIMovementHandler))
+			{
+				//col.gameObject.GetComponent<EntityMovementHandler>().DoDamage((_differenceForce / 1000.0f) * 50.0f);
 			}
 		}
 	}

@@ -16,7 +16,7 @@ public class MovementHandler : EntityMovementHandler
     public GameObject BoostRing;
     [HideInInspector]
     public Vector2 movementDirection;
-    public float Velocity;
+    public float MovementVelocity;
 
     void Start()
     {
@@ -49,8 +49,8 @@ public class MovementHandler : EntityMovementHandler
         float horizontal = Input.GetAxis((_gameSceneManager.CustomInputManager.IsUsingController) ? Constants.CONTROLLER_LEFT_STICK_HORIZONTAL : Constants.HORIZONTAL) * Time.deltaTime;
         float vertical = Input.GetAxis((_gameSceneManager.CustomInputManager.IsUsingController) ? Constants.CONTROLLER_LEFT_STICK_VERTICAL : Constants.VERTICAL) * Time.deltaTime;
         Vector2 movement = new Vector2(horizontal, vertical);
-
-        rg2d.AddForce((movement * (Velocity * Velocity) / rg2d.mass));
+        Velocity = rg2d.velocity.magnitude;
+        rg2d.AddForce((movement * (MovementVelocity * MovementVelocity) / rg2d.mass));
 
         movementDirection = movement;
 
@@ -126,7 +126,7 @@ public class MovementHandler : EntityMovementHandler
                         Logger.Log("Double Boosted!");
                         _doubleBoostTimer = 0;
                         _doubleBoosted = true;
-                        _doubleBoostCoolDown = 0.5f;
+                        _doubleBoostCoolDown = .1f;
                         _canBoost = false;
                     }
                 } else

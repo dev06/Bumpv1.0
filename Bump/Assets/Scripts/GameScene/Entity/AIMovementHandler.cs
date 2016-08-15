@@ -90,7 +90,7 @@ public class AIMovementHandler : EntityMovementHandler {
 		if (target != null)
 		{
 			Move(TOGGLE);
-
+			Velocity = rg2d.velocity.magnitude;
 			CalculateForce(Time.deltaTime);
 		} else
 		{

@@ -44,6 +44,7 @@ public class GameSceneManager : MonoBehaviour {
 
 
 
+
         GAME_TIME = (int)Time.realtimeSinceStartup;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
