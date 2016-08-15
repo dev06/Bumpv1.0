@@ -46,31 +46,25 @@ public class EntityMovementHandler : MonoBehaviour {
 
 	}
 
-	protected void Boost(Vector2 movement, float boost, out bool isBoosting, out Vector2 appliedForce)
+	protected void Boost(Vector2 movement, float boost, out bool isBoosting)
 	{
-		appliedForce = Vector2.zero;
 		if (_boosted == false && (movement != Vector2.zero || (Mathf.Abs(rg2d.velocity.x) >= 2 || Mathf.Abs(rg2d.velocity.y) >= 2)))
 		{
 			Vector2 force = movement * boost;
 			rg2d.AddForce(force);
 			_boosted = true;
 			isBoosting = _boosted;
-			appliedForce = force;
 		} else {
 
 			isBoosting = false;
 		}
-
 	}
 
-	protected void Boost(Vector2 movement, float boost)
+
+	protected void Boost(Vector2 movement, float boostForce)
 	{
-		if (_boosted == false && (movement != Vector2.zero || (Mathf.Abs(rg2d.velocity.x) >= 2 || Mathf.Abs(rg2d.velocity.y) >= 2)))
-		{
-			Vector2 force = movement * boost;
-			rg2d.AddForce(force);
-			_boosted = true;
-		}
+
+		rg2d.AddForce(movement * boostForce);
 	}
 
 	protected void CanBoost()
@@ -165,6 +159,24 @@ public class EntityMovementHandler : MonoBehaviour {
 		_oldMagnitude = currentMag;
 		return Force;
 	}
+
+	protected virtual void CollisionEnter(Collision2D col)
+	{
+		if (col.gameObject.GetComponent<EntityMovementHandler>() != null)
+		{
+			if (col.gameObject.GetComponent<EntityMovementHandler>().GetType() == typeof(AIMovementHandler)) {
+
+			}
+		}
+	}
+
+
+	void OnCollisionEnter2D(Collision2D col)
+	{
+		CollisionEnter(col);
+	}
+
+
 
 
 	public float Health {

@@ -46,10 +46,10 @@ public class MovementHandler : EntityMovementHandler
     /// </summary>
     void Move()
     {
-        Vector2 boostForce = Vector2.zero;
         float horizontal = Input.GetAxis((_gameSceneManager.CustomInputManager.IsUsingController) ? Constants.CONTROLLER_LEFT_STICK_HORIZONTAL : Constants.HORIZONTAL) * Time.deltaTime;
         float vertical = Input.GetAxis((_gameSceneManager.CustomInputManager.IsUsingController) ? Constants.CONTROLLER_LEFT_STICK_VERTICAL : Constants.VERTICAL) * Time.deltaTime;
         Vector2 movement = new Vector2(horizontal, vertical);
+
         rg2d.AddForce((movement * (Velocity * Velocity) / rg2d.mass));
 
         movementDirection = movement;
@@ -59,9 +59,7 @@ public class MovementHandler : EntityMovementHandler
             if (_gameSceneManager.CustomInputManager.GetInputEventPress == InputEvent.GameInputEventPress.BOOST)
             {
                 bool boost;
-                Vector2 appliedForce;
-                Boost(movement, Mathf.Pow(_startBoostForce, 4.2f), out boost, out appliedForce);
-                boostForce = appliedForce;
+                Boost(movement, Mathf.Pow(_startBoostForce, 4.2f), out boost);
                 if (boost) {
                     for (int i = 0; i < 5; i++)
                     {
@@ -83,9 +81,7 @@ public class MovementHandler : EntityMovementHandler
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 bool boost;
-                Vector2 appliedForce;
-                Boost(movement, _startBoostForce, out boost, out appliedForce);
-                boostForce = appliedForce;
+                Boost(movement, _startBoostForce, out boost);
                 if (_boosted) {
                     AddExternalObject(BoostRing, transform.position, transform.rotation, color);
                 }
@@ -102,7 +98,7 @@ public class MovementHandler : EntityMovementHandler
 
         FaceFoward(transform, movement);
         RegisterDoubleBoost();
-        DoubleBoost(boostForce);
+        DoubleBoost(movement);
 
     }
 
@@ -127,9 +123,10 @@ public class MovementHandler : EntityMovementHandler
                 {
                     if (_gameSceneManager.CustomInputManager.GetInputEventPress == InputEvent.GameInputEventPress.BOOST)
                     {
+                        Logger.Log("Double Boosted!");
                         _doubleBoostTimer = 0;
                         _doubleBoosted = true;
-                        _doubleBoostCoolDown = 0.3f;
+                        _doubleBoostCoolDown = 0.5f;
                         _canBoost = false;
                     }
                 } else
@@ -152,17 +149,28 @@ public class MovementHandler : EntityMovementHandler
     }
 
 
-    public override void DoubleBoost(Vector3 boostForce)
+    public override void DoubleBoost(Vector3 movement)
     {
         if (_doubleBoosted)
         {
-            bool boost;
-            Vector2 appliedForce;
-            Boost(boostForce, Mathf.Pow(_startBoostForce, 5.6f), out boost, out appliedForce);
+            Boost(movementDirection, Mathf.Pow(_startBoostForce, 3.5f));
             if (_boosted) {
                 AddExternalObject(BoostRing, transform.position, transform.rotation, color);
             }
         }
+    }
+
+    GameObject FindClosestTarget()
+    {
+        for (int i = 0; i < GameSceneManager.Players.Count; i++)
+        {
+            EntityMovementHandler emh = GameSceneManager.Players[i];
+            if (emh != this)
+            {
+
+            }
+        }
+        return null;
     }
 
 

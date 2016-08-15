@@ -19,7 +19,7 @@ public class AIMovementHandler : EntityMovementHandler {
 	public float _velocity                  = 65f;
 
 	private float updatePositionEvery        = .5f;
-	private float attackFrequency            = .8f;  //0.0f (0%) - 1.0f (100%)
+	private float attackFrequency            = 1f;  //0.0f (0%) - 1.0f (100%)
 	private float _boostForce 				 = 1000f;
 	private float _boostFrequency 			 = .02f;
 	private float _startBoostSpeed           = 20.0f;
@@ -64,6 +64,13 @@ public class AIMovementHandler : EntityMovementHandler {
 		Manage();
 	}
 
+	void FixedUpdate()
+	{
+
+		//AnimateBotBumper(50.0f * Time.fixedDeltaTime);
+	}
+
+
 	///summary
 	///Adds force to the entity to the target
 	///summary
@@ -83,7 +90,7 @@ public class AIMovementHandler : EntityMovementHandler {
 		if (target != null)
 		{
 			Move(TOGGLE);
-			AnimateBotBumper(1);
+
 			CalculateForce(Time.deltaTime);
 		} else
 		{
@@ -197,10 +204,22 @@ public class AIMovementHandler : EntityMovementHandler {
 
 	private void AnimateBotBumper(float rate)
 	{
+		Logger.Log(_animator._bumperActive, LoggerType.EVENT);
 		AdjustColliderOffset(_animator.index);
-		if (WithinRange(transform.position, target.transform.position, minForceDistance * 2.0f) && Random.Range(0.0f, 1.0f) <= attackFrequency)
+		if (WithinRange(transform.position, target.transform.position, minForceDistance * 5.0f))
 		{
-			_animator.AnimateBumper(rate);
+			float freq = 0;
+			if (_animator._bumperActive == false)
+			{
+				freq = Random.Range(0.0f, 1.0f);
+			}
+
+			if (freq <= attackFrequency)
+			{
+				_animator.AnimateBumper(rate);
+			}
+
+
 		} else
 		{
 			_animator.ResetIndex();
@@ -215,8 +234,8 @@ public class AIMovementHandler : EntityMovementHandler {
 			if (rg2d.velocity.SqrMagnitude() > _startBoostSpeed)
 			{
 				bool boosted;
-				Vector2 appliedForce;
-				Boost(force.normalized, _boostForce, out boosted, out appliedForce);
+
+				Boost(force.normalized, _boostForce, out boosted);
 				if (boosted)
 				{
 					AddExternalObject(Ring, transform.position, transform.rotation, color);
@@ -260,8 +279,9 @@ public class AIMovementHandler : EntityMovementHandler {
 
 	}
 
-	void OnCollisionEnter2D(Collision2D col)
+	protected override void CollisionEnter(Collision2D col)
 	{
+		base.CollisionEnter(col);
 		ChangeDirection(true);
 	}
 

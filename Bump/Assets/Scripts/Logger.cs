@@ -19,11 +19,9 @@ public class Logger : MonoBehaviour {
 
 	public static void Log(object o)
 	{
-		if (printAll)
+		if (printAll && printLog)
 		{
-
 			Debug.Log(LoggerType.LOG + " => <color=red>" + o + "</color>");
-
 		}
 	}
 

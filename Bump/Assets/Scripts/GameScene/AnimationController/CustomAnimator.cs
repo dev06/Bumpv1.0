@@ -16,33 +16,33 @@ public class CustomAnimator : MonoBehaviour {
 	public int index = 0;
 	#endregion--- PUBLIC MEMEBERS----
 
-	private bool _animating = false; 
+	private bool _animating = false;
 
-	void Update(){
+	void Update() {
 
 	}
 
 	public void  AnimateBumper(float rate)
 	{
 
-		_animating = true; 
+		_animating = true;
 		if (reverse == false)
 		{
 			index += (int)rate;
-			_bumperActive = true; 
+			_bumperActive = true;
 		}
 		else
 		{
 			if (index > 0)
 			{
 				index -= (int)rate;
-				_bumperActive = true; 
+				_bumperActive = true;
 			} else
 			{
 				reverse = false;
 				_triggerHit = false;
 				_bumperActive = false;
-				_animating = false; 
+				_animating = false;
 			}
 		}
 
@@ -61,8 +61,9 @@ public class CustomAnimator : MonoBehaviour {
 		}
 	}
 
-	public void ResetIndex(){
-		index = 0; 
+	public void ResetIndex() {
+		_bumperActive = false;
+		index = 0;
 		GetComponent<SpriteRenderer>().sprite = sprites[0];
 	}
 }

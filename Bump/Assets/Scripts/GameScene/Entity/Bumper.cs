@@ -12,8 +12,8 @@ public class Bumper : MonoBehaviour {
 
 
 
-    void Start () {
-
+    void Start ()
+    {
         try {
             _animator = GetComponentInParent<CustomAnimator>();
             rg2d = GetComponentInParent<Rigidbody2D>();
@@ -21,8 +21,6 @@ public class Bumper : MonoBehaviour {
         } catch (Exception e) {
             Debug.Log("Components could not be found");
         }
-
-
     }
 
     void Update()
@@ -55,6 +53,7 @@ public class Bumper : MonoBehaviour {
             Vector3 direction = col.gameObject.transform.position - transform.parent.transform.position;
 
 
+
             float _thisMomemtum = GetComponentInParent<EntityMovementHandler>().GetForce;
 
             float _otherMomentum = col.gameObject.GetComponent<EntityMovementHandler>().GetForce;
@@ -62,7 +61,7 @@ public class Bumper : MonoBehaviour {
             float _momemtumDiff = Mathf.Abs(Mathf.Abs(_thisMomemtum) - Mathf.Abs(_otherMomentum));
 
 
-            float entityDamage = (_momemtumDiff / 400.0f) * Constants.BUMPER_DAMAGE_BASE;
+            float entityDamage =  Constants.BUMPER_DAMAGE_BASE;
 
 
             if (col.gameObject.GetComponent<EntityMovementHandler>().GetType() == typeof(MovementHandler))
@@ -77,7 +76,7 @@ public class Bumper : MonoBehaviour {
             }
 
 
-            col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction.normalized * _momemtumDiff * 5.0f);
+            //col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction.normalized * _momemtumDiff * 5.0f);
 
             _hit = true;
         }
