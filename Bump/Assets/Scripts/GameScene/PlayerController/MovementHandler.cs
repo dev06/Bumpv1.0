@@ -126,7 +126,7 @@ public class MovementHandler : EntityMovementHandler
                         Logger.Log("Double Boosted!");
                         _doubleBoostTimer = 0;
                         _doubleBoosted = true;
-                        _doubleBoostCoolDown = .1f;
+                        _doubleBoostCoolDown = 5.5f;
                         _canBoost = false;
                     }
                 } else
@@ -135,15 +135,18 @@ public class MovementHandler : EntityMovementHandler
                     _doubleBoosted = false;
                     _canBoost = false;
                 }
-            } else {
-                if (_doubleBoostCoolDown > 0.0f)
-                {
-                    _doubleBoostCoolDown -= Time.deltaTime;
-                } else
-                {
-                    _doubleBoosted = false;
-                    _canBoost = false;
-                }
+            }
+        }
+
+        if (_doubleBoosted)
+        {
+            if (_doubleBoostCoolDown > 0.0f)
+            {
+                _doubleBoostCoolDown -= Time.deltaTime;
+            } else
+            {
+                _doubleBoosted = false;
+                _canBoost = false;
             }
         }
     }
@@ -151,26 +154,13 @@ public class MovementHandler : EntityMovementHandler
 
     public override void DoubleBoost(Vector3 movement)
     {
-        if (_doubleBoosted)
+        if (_canBoost)
         {
             Boost(movementDirection, Mathf.Pow(_startBoostForce, 3.5f));
             if (_boosted) {
                 AddExternalObject(BoostRing, transform.position, transform.rotation, color);
             }
         }
-    }
-
-    GameObject FindClosestTarget()
-    {
-        for (int i = 0; i < GameSceneManager.Players.Count; i++)
-        {
-            EntityMovementHandler emh = GameSceneManager.Players[i];
-            if (emh != this)
-            {
-
-            }
-        }
-        return null;
     }
 
 

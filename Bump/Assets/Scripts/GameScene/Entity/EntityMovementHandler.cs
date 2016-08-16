@@ -170,7 +170,6 @@ public class EntityMovementHandler : MonoBehaviour {
 			Rigidbody2D _otherRigidBody = col.gameObject.GetComponent<Rigidbody2D>();
 			float _differenceForce = Mathf.Abs(Mathf.Abs(_thisObject.Velocity) - Mathf.Abs(_otherObject.Velocity));
 			float _differenceMass = Mathf.Abs(_otherRigidBody.mass - rg2d.mass);
-			Logger.Log("Difference Mass " + _differenceMass);
 
 			if (Mathf.Abs(_thisObject.Velocity) > Mathf.Abs(_otherObject.Velocity))
 			{
@@ -178,11 +177,6 @@ public class EntityMovementHandler : MonoBehaviour {
 			} else
 			{
 				_thisObject.DoDamage((_differenceForce / 1000.0f) * 20.0f);
-			}
-
-			if (col.gameObject.GetComponent<EntityMovementHandler>().GetType() == typeof(AIMovementHandler))
-			{
-				//col.gameObject.GetComponent<EntityMovementHandler>().DoDamage((_differenceForce / 1000.0f) * 50.0f);
 			}
 		}
 	}
