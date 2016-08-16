@@ -126,7 +126,7 @@ public class MovementHandler : EntityMovementHandler
                         Logger.Log("Double Boosted!");
                         _doubleBoostTimer = 0;
                         _doubleBoosted = true;
-                        _doubleBoostCoolDown = 5.5f;
+                        _doubleBoostCoolDown = .5f;
                         _canBoost = false;
                     }
                 } else
@@ -154,9 +154,9 @@ public class MovementHandler : EntityMovementHandler
 
     public override void DoubleBoost(Vector3 movement)
     {
-        if (_canBoost)
+        if (_doubleBoosted)
         {
-            Boost(movementDirection, Mathf.Pow(_startBoostForce, 3.5f));
+            Boost(movementDirection, Mathf.Pow(_startBoostForce, 3.0f));
             if (_boosted) {
                 AddExternalObject(BoostRing, transform.position, transform.rotation, color);
             }
