@@ -21,13 +21,20 @@ public class MovementHandler : EntityMovementHandler
     void Start()
     {
         base.Init();
-        Health = 100;
+        Health = 25;
         GetComponent<SpriteRenderer>().color = color;
     }
 
 
     void Update()
     {
+        Manage();
+    }
+
+
+    void Manage()
+    {
+
         AdjustColliderOffset(_animator.index);
         CanBoost();
         Move();
@@ -39,6 +46,14 @@ public class MovementHandler : EntityMovementHandler
         }
 
         CalculateForce(Time.deltaTime);
+
+
+        if (isAlive() == false)
+        {
+            GameSceneManager.TOTAL_PLAYERS--;
+            GameSceneManager.Players.Remove(this);
+            Destroy(gameObject);
+        }
     }
 
     /// <summary>
@@ -164,9 +179,6 @@ public class MovementHandler : EntityMovementHandler
     }
 
 
-
-
-
     void FixedUpdate()
     {
         if (isMoving(false, movementDirection)) {
@@ -179,10 +191,17 @@ public class MovementHandler : EntityMovementHandler
 
     }
 
-
     public void DoDamage(float damage)
     {
-        base.DoDamage(damage);
+        if ((int)_health > 0)
+        {
+            _health -= damage;
+        } else
+        {
+            Destroy(gameObject);
+            GameSceneManager.TOTAL_PLAYERS--;
+            GameSceneManager.Players.Remove(this);
+        }
     }
 
     public bool IsBumperActive {

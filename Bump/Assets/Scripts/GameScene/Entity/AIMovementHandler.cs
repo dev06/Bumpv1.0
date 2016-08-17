@@ -56,7 +56,7 @@ public class AIMovementHandler : EntityMovementHandler {
 		_animator = GetComponent<CustomAnimator>();
 		_bumper = GetComponentInChildren<Bumper>();
 		GetComponent<SpriteRenderer>().color = color;
-		Health = 100.1f;
+		Health = 25f;
 	}
 
 	// Update is called once per framesd
@@ -91,6 +91,14 @@ public class AIMovementHandler : EntityMovementHandler {
 		{
 			Move(TOGGLE);
 			Velocity = rg2d.velocity.magnitude;
+
+			if (isAlive() == false)
+			{
+				GameSceneManager.TOTAL_PLAYERS--;
+				GameSceneManager.Players.Remove(this);
+				Destroy(gameObject);
+			}
+
 			CalculateForce(Time.deltaTime);
 		} else
 		{
@@ -109,8 +117,6 @@ public class AIMovementHandler : EntityMovementHandler {
 
 	private void AddSimpleForce(Vector2 targetVec)
 	{
-
-
 		Vector2 direction = targetVec - new Vector2(transform.position.x, transform.position.y);
 		FaceFoward(transform, direction);
 
@@ -204,7 +210,6 @@ public class AIMovementHandler : EntityMovementHandler {
 
 	private void AnimateBotBumper(float rate)
 	{
-		Logger.Log(_animator._bumperActive, LoggerType.EVENT);
 		AdjustColliderOffset(_animator.index);
 		if (WithinRange(transform.position, target.transform.position, minForceDistance * 5.0f))
 		{
@@ -303,7 +308,7 @@ public class AIMovementHandler : EntityMovementHandler {
 		//Destroy(gameObject);
 	}
 
-	public void DoDamage(float damage)
+	public override void DoDamage(float damage)
 	{
 		base.DoDamage(damage);
 	}

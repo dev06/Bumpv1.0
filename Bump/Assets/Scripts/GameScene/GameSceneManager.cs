@@ -22,12 +22,9 @@ public class GameSceneManager : MonoBehaviour {
     private int hello;
     void Awake () {
 
-
         Init();
         //IsControlledConnected();
         LoadEnvironment();
-
-
     }
 
     void Init()
@@ -36,20 +33,29 @@ public class GameSceneManager : MonoBehaviour {
         _environment = GameObject.FindWithTag("Environment");
         _customInputManager = GetComponent<CustomInputManager>();
         _cameraController = Camera.main.GetComponent<CameraController>();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update () {
 
         //TODO temp
 
-
-
         GAME_TIME = (int)Time.realtimeSinceStartup;
+        frames++;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            if (Application.isEditor == false)
+            {
+                Application.Quit();
+            } else
+            {
+                //EditorApplication.isPlaying = false;
+            }
         }
-        frames++;
+
+
         if (frames % 60 == 0)
         {
             fpsText.text = "" + (int)(1.0f / Time.deltaTime);
@@ -66,48 +72,12 @@ public class GameSceneManager : MonoBehaviour {
         if (CustomInputManager.GetInputEventPress == InputEvent.GameInputEventPress.RESET || Input.GetKeyDown(KeyCode.K))
         {
             ResetGameManager();
+            Logger.Log("Game Reseted!", LoggerType.EVENT);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
         }
-
-
-
-
-        // if (mapping)
-        // {
-        //     MapController();
-        // } else {
-        //     if (Input.GetKeyDown("joystick 1 button " + hello)) {
-        //         Logger.Log("Hello World!");
-        //     }
-        // }
-
-
-
     }
 
-    // bool mapping = true;
-    // void MapController()
-    // {
-    //     for (int i = 0; i < 20; i++) {
-    //         if (Input.GetAxis("Z") == 0)            {
-    //             if (Input.GetKeyDown("joystick 1 button " + i)) {
-    //                 hello = i;
-    //                 Logger.Log("Map To => " + i);
-    //             }
-    //         }else{
-    //             Logger.Log("Press choose another button");
-    //         }
 
-    //     }
-
-
-
-    //     if (Input.GetKeyDown(KeyCode.Q))
-    //     {
-    //         mapping = false;
-    //     }
-    // }
 
     bool IsControlledConnected()
     {
@@ -154,13 +124,6 @@ public class GameSceneManager : MonoBehaviour {
 
     public CustomInputManager CustomInputManager
     {
-        get
-        {
-            return _customInputManager;
-        }
+        get  {return _customInputManager; }
     }
-
-
-
-
 }

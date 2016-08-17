@@ -131,19 +131,14 @@ public class EntityMovementHandler : MonoBehaviour {
 		return Vector3.Distance(from, to);
 	}
 
-	protected void DoDamage(float damage)
+	public virtual void DoDamage(float damage)
 	{
-		if ((int)_health > 0)
-		{
-			_health -= damage;
-		}
+		_health -= damage;
+	}
 
-		if ((int)_health <= 0)
-		{
-			GameSceneManager.TOTAL_PLAYERS--;
-			GameSceneManager.Players.Remove(this);
-			Destroy(gameObject);
-		}
+	public virtual bool isAlive()
+	{
+		return (int)_health > 0;
 	}
 
 	protected void SetHealth(float _health)
