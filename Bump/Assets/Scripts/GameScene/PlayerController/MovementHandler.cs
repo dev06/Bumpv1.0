@@ -138,7 +138,6 @@ public class MovementHandler : EntityMovementHandler
                 {
                     if (_gameSceneManager.CustomInputManager.GetInputEventPress == InputEvent.GameInputEventPress.BOOST)
                     {
-                        Logger.Log("Double Boosted!");
                         _doubleBoostTimer = 0;
                         _doubleBoosted = true;
                         _doubleBoostCoolDown = .5f;

@@ -76,7 +76,7 @@ public class Bumper : MonoBehaviour {
             }
 
 
-            //col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction.normalized * _momemtumDiff * 5.0f);
+            col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction.normalized * _momemtumDiff * 5.0f);
 
             _hit = true;
         }

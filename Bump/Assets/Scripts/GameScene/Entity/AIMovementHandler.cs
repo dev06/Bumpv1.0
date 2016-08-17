@@ -20,7 +20,7 @@ public class AIMovementHandler : EntityMovementHandler {
 
 	private float updatePositionEvery        = .5f;
 	private float attackFrequency            = 1f;  //0.0f (0%) - 1.0f (100%)
-	private float _boostForce 				 = 1000f;
+	private float _boostForce 				 = 20f;
 	private float _boostFrequency 			 = .02f;
 	private float _startBoostSpeed           = 20.0f;
 	private float _straightDistanceOffset    = 30f;
@@ -240,7 +240,7 @@ public class AIMovementHandler : EntityMovementHandler {
 			{
 				bool boosted;
 
-				Boost(force.normalized, _boostForce, out boosted);
+				Boost(force.normalized, Mathf.Pow(_boostForce, 4.2f), out boosted);
 				if (boosted)
 				{
 					AddExternalObject(Ring, transform.position, transform.rotation, color);
