@@ -236,16 +236,14 @@ public class AIMovementHandler : EntityMovementHandler {
 
 		if (Random.Range(0.0f, 1.0f) <= _boostFrequency)
 		{
-			if (rg2d.velocity.SqrMagnitude() > _startBoostSpeed)
-			{
-				bool boosted;
+			bool boosted;
 
-				Boost(force.normalized, Mathf.Pow(_boostForce, 4.2f), out boosted);
-				if (boosted)
-				{
-					AddExternalObject(Ring, transform.position, transform.rotation, color);
-				}
+			Boost(force.normalized, Mathf.Pow(_boostForce, 4.2f), out boosted);
+			if (boosted)
+			{
+				AddExternalObject(Ring, transform.position, transform.rotation, color);
 			}
+
 		}
 
 		bool withinRange = Vector2.Distance(target.transform.position, transform.position) < minForceDistance * 2.0f;
