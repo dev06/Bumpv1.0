@@ -165,7 +165,6 @@ public class EntityMovementHandler : MonoBehaviour {
 			Rigidbody2D _otherRigidBody = col.gameObject.GetComponent<Rigidbody2D>();
 			float _differenceForce = Mathf.Abs(Mathf.Abs(_thisObject.Velocity) - Mathf.Abs(_otherObject.Velocity));
 
-			Logger.Log(_differenceForce);
 
 			if (Mathf.Abs(_thisObject.Velocity) > Mathf.Abs(_otherObject.Velocity))
 			{

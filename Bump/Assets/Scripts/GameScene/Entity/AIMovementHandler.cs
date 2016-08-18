@@ -15,6 +15,8 @@ public class AIMovementHandler : EntityMovementHandler {
 	private Vector2 force = Vector2.zero;
 	private Vector2 _partrolVec = Vector2.zero;
 	private bool hit;
+	private bool _canDoubleBoost;
+	private float _doubleBoostFreq           = .6f;
 	private float minForceDistance           = 10; //when to stop adding force
 	public float _velocity                  = 65f;
 
@@ -80,6 +82,7 @@ public class AIMovementHandler : EntityMovementHandler {
 		{
 			UseProjectedTrajectory();
 			UseEvasion();
+			RegisterDoubleBoost();
 			CanBoost();
 			UseBoost();
 		}
@@ -199,6 +202,33 @@ public class AIMovementHandler : EntityMovementHandler {
 
 	}
 
+	private void RegisterDoubleBoost()
+	{
+		if (_canDoubleBoost)
+		{
+			_doubleBoostTimer += Time.deltaTime;
+
+			for (int i = 0; i < 5; i++)
+			{
+				AddExternalObject(Ring, transform.position, transform.rotation, color);
+			}
+
+			if (_doubleBoostTimer > _doubleBoostDelay / 2.0f)
+			{
+				_doubleBoostTimer = 0;
+				_canDoubleBoost = false;
+			}
+		}
+	}
+
+	private void UseDoubleBoost()
+	{
+
+	}
+
+
+
+
 	private float GetAngle()
 	{
 		float dy = transform.position.y - target.transform.position.y;
@@ -238,12 +268,20 @@ public class AIMovementHandler : EntityMovementHandler {
 		{
 			bool boosted;
 
-			Boost(force.normalized, Mathf.Pow(_boostForce, 4.2f), out boosted);
+			Boost(force.normalized, Mathf.Pow(_boostForce, 2.8f), out boosted);
 			if (boosted)
 			{
-				AddExternalObject(Ring, transform.position, transform.rotation, color);
-			}
 
+				AddExternalObject(Ring, transform.position, transform.rotation, color);
+				if (_canDoubleBoost == false)
+				{
+					if (Random.Range(0.0f, 1.0f) < _doubleBoostFreq)
+					{
+						_canDoubleBoost = true;
+						Boost(force.normalized, Mathf.Pow(_boostForce, 3.0f));
+					}
+				}
+			}
 		}
 
 		bool withinRange = Vector2.Distance(target.transform.position, transform.position) < minForceDistance * 2.0f;
