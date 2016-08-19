@@ -159,7 +159,6 @@ public class MovementHandler : EntityMovementHandler
                 _doubleBoostCoolDown -= Time.deltaTime;
             } else
             {
-                _doubleBoosted = false;
                 _canBoost = false;
             }
         }
@@ -170,10 +169,13 @@ public class MovementHandler : EntityMovementHandler
     {
         if (_doubleBoosted)
         {
+            Logger.Log("Force added");
             Boost(movementDirection, Mathf.Pow(_startBoostForce, 3.0f));
             if (_boosted) {
                 AddExternalObject(BoostRing, transform.position, transform.rotation, color);
             }
+
+            _doubleBoosted = false;
         }
     }
 

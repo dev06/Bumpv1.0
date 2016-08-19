@@ -16,7 +16,7 @@ public class AIMovementHandler : EntityMovementHandler {
 	private Vector2 _partrolVec = Vector2.zero;
 	private bool hit;
 	private bool _canDoubleBoost;
-	private float _doubleBoostFreq           = .6f;
+	private float _doubleBoostFreq           = .03f;
 	private float minForceDistance           = 10; //when to stop adding force
 	public float _velocity                  = 65f;
 
@@ -69,7 +69,7 @@ public class AIMovementHandler : EntityMovementHandler {
 	void FixedUpdate()
 	{
 
-		//AnimateBotBumper(50.0f * Time.fixedDeltaTime);
+		AnimateBotBumper(50.0f * Time.fixedDeltaTime);
 	}
 
 
@@ -208,13 +208,14 @@ public class AIMovementHandler : EntityMovementHandler {
 		{
 			_doubleBoostTimer += Time.deltaTime;
 
-			for (int i = 0; i < 5; i++)
-			{
-				AddExternalObject(Ring, transform.position, transform.rotation, color);
-			}
 
-			if (_doubleBoostTimer > _doubleBoostDelay / 2.0f)
+			if (_doubleBoostTimer > _doubleBoostDelay)
 			{
+				Boost(force.normalized, Mathf.Pow(_boostForce, 3.0f));
+				for (int i = 0; i < 5; i++)
+				{
+					AddExternalObject(Ring, transform.position, transform.rotation, color);
+				}
 				_doubleBoostTimer = 0;
 				_canDoubleBoost = false;
 			}
@@ -278,7 +279,7 @@ public class AIMovementHandler : EntityMovementHandler {
 					if (Random.Range(0.0f, 1.0f) < _doubleBoostFreq)
 					{
 						_canDoubleBoost = true;
-						Boost(force.normalized, Mathf.Pow(_boostForce, 3.0f));
+
 					}
 				}
 			}
